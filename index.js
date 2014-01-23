@@ -2,4 +2,4 @@
 * [exports description]
 * @type {[type]}
 */
-module.exports = require('./lib/telnet-client');
+module.exports = require('./lib/telnetclient');
