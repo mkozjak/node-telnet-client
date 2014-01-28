@@ -6,7 +6,7 @@
     "email": "kozjakm1@gmail.com"
   },
   "version": "0.0.1",
-  "main": "./lib/telnetclient.js",
+  "main": "./lib/telnet-client.js",
   "dependencies": {
     "log4js": ">= 0.6.9"
   },
