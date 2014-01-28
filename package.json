@@ -1,14 +1,14 @@
 {
-  "name": "telnetclient.js",
+  "name": "telnet-client",
   "description": "Simple node.js telnet client",
   "author": {
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
   "version": "0.0.1",
-  "main": "./telnetclient.js",
+  "main": "./lib/telnetclient.js",
   "dependencies": {
-    "log4js": ">= 0.6.9",
+    "log4js": ">= 0.6.9"
   },
   "engine": "node >= 0.10.23",
   "license": {
