@@ -14,7 +14,10 @@
   "license": {
     "type": "MIT"
   },
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mkozjak/node-telnet-client.git"
+  },
   "contributors": [
     {
       "name": "Petar Koretic",
