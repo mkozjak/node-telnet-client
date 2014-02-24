@@ -63,7 +63,7 @@ of inactivity on the socket.
 ### connection.exec(data, [callback])
 
 Sends data on the socket (should be a compatible remote host's command if sane information is wanted).
-The optional callback parameter will be executed when the data is finally written out - this may not be immediately. 
+The optional callback parameter will be executed when the data is finally written out - this may not be immediately.
 
 ### connection.end()
 
