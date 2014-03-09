@@ -64,6 +64,7 @@ of inactivity on the socket.
 
 Sends data on the socket (should be a compatible remote host's command if sane information is wanted).
 The optional callback parameter will be executed when the data is finally written out - this may not be immediately.
+Command result will be passed as the first argument to the callback.
 
 ### connection.end()
 
@@ -76,6 +77,7 @@ Ensures that no more I/O activity happens on this socket. Only necessary in case
 ### Event: 'ready'
 
 Emitted when a socket connection is successfully established and the client is successfully connected to the specified remote host.
+A value of prompt is passed as the first argument to the callback.
 
 ### Event: 'writedone'
 
