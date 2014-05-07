@@ -31,7 +31,7 @@ Locally in your project or globally:
     connection.on('timeout', function() {
       console.log('socket timeout!')
       connection.end();
-    );
+    });
     
     connection.on('close', function() {
       console.log('connection closed');
@@ -73,6 +73,10 @@ Half-closes the socket. i.e., it sends a FIN packet. It is possible the server w
 ### connection.destroy()
 
 Ensures that no more I/O activity happens on this socket. Only necessary in case of errors (parse error or so).
+
+### Event: 'connect'
+
+Emitted when a socket connection is successfully established.
 
 ### Event: 'ready'
 

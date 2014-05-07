@@ -11,6 +11,12 @@
   "license": {
     "type": "MIT"
   },
+  "devDependencies": {
+    "nodeunit": ">= 0.9.0"
+  },
+  "scripts": {
+    "test": "nodeunit test"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/mkozjak/node-telnet-client.git"
