@@ -31,7 +31,7 @@ Locally in your project or globally:
     connection.on('timeout', function() {
       console.log('socket timeout!')
       connection.end();
-    );
+    });
     
     connection.on('close', function() {
       console.log('connection closed');
