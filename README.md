@@ -74,6 +74,10 @@ Half-closes the socket. i.e., it sends a FIN packet. It is possible the server w
 
 Ensures that no more I/O activity happens on this socket. Only necessary in case of errors (parse error or so).
 
+### Event: 'connect'
+
+Emitted when a socket connection is successfully established.
+
 ### Event: 'ready'
 
 Emitted when a socket connection is successfully established and the client is successfully connected to the specified remote host.
