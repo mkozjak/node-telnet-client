@@ -59,6 +59,7 @@ of inactivity on the socket.
 * irs: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
 * ors: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * echoLines: The number of lines used to cut off the response. Defaults to 1.
+* pageSeparator: The pattern used to break the number of lines on output. Defaults to '---- More'.
 
 ### connection.exec(data, [callback])
 
