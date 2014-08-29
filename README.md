@@ -61,11 +61,21 @@ of inactivity on the socket.
 * echoLines: The number of lines used to cut off the response. Defaults to 1.
 * pageSeparator: The pattern used to break the number of lines on output. Defaults to '---- More'.
 
-### connection.exec(data, [callback])
+### connection.exec(data, [options], [callback])
 
 Sends data on the socket (should be a compatible remote host's command if sane information is wanted).
 The optional callback parameter will be executed when the data is finally written out - this may not be immediately.
 Command result will be passed as the first argument to the callback.
+
+Options:
+
+* shellPrompt: Shell prompt that the host is using. Defaults to regex '/(?:\/ )?#\s/'.
+* loginPrompt: Username/login prompt that the host is using. Defaults to regex '/login[: ]*$/i'.
+* timeout: Sets the socket to timeout after the specified number of milliseconds
+of inactivity on the socket.
+* irs: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
+* ors: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
+* echoLines: The number of lines used to cut off the response. Defaults to 1.
 
 ### connection.end()
 
