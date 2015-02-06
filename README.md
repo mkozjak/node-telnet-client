@@ -15,7 +15,7 @@ Locally in your project or globally:
     var connection = new telnet();
     
     var params = {
-      host: 127.0.0.1,
+      host: '127.0.0.1',
       port: 23,
       shellPrompt: '/ # ',
       timeout: 1500,
