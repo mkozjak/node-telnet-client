@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mkozjak/node-telnet-client.svg?branch=master)](https://travis-ci.org/mkozjak/node-telnet-client)
+
 # node-telnet-client
 
 A simple telnet client for node.js
