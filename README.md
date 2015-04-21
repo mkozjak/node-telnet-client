@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/mkozjak/node-telnet-client.svg?branch=master)](https://travis-ci.org/mkozjak/node-telnet-client)
 
+[![Coverage Status](https://coveralls.io/repos/mkozjak/node-telnet-client/badge.svg?branch=master)](https://coveralls.io/r/mkozjak/node-telnet-client?branch=coveralls)
+
 # node-telnet-client
 
 A simple telnet client for node.js
