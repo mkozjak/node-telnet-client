@@ -1,4 +1,6 @@
-var telnet = require('../lib/telnet-client');
+var telnet = process.env.NODETELNETCLIENT_COV 
+  ? require('../lib-cov/telnet-client')
+  : require('../lib/telnet-client');
 var nodeunit = require('nodeunit');
 var net = require('net');
 

@@ -12,10 +12,13 @@
     "type": "MIT"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
+    "jscoverage": "^0.5.9",
     "nodeunit": ">= 0.9.0"
   },
   "scripts": {
-    "test": "nodeunit test"
+    "test": "nodeunit test",
+    "coveralls": "jscoverage lib && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls"
   },
   "repository": {
     "type": "git",
