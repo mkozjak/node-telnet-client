@@ -1,25 +1,35 @@
 var telnet = require('../lib/telnet-client');
 var nodeunit = require('nodeunit');
-var socket;
+var net = require('net');
 
+var socket, server, callbackCount;
 
 exports['socket'] = nodeunit.testCase({
   setUp: function(callback) {
     socket = new telnet();
-    callback();
+    callbackCount = 0;
+    server = net.createServer(function(c) {
+      callbackCount++;
+      c.end();
+    })
+    server.listen(2323, function(err) {
+      callback();
+    });
   },
 
   tearDown: function(callback) {
+    server.close(function() {
+      callback();
+    });
   },
 
   "connect": function(test) {
     socket.connect({
-      // TODO: napravi neki server koji ce glumiti box i pokreni ga u setUp
-      host: '10.126.129.195',
-      port: 23
+      host: '127.0.0.1',
+      port: 2323 //not using 23 is a service port could need sudo 
     });
-
     socket.on('connect', function() {
+      test.ok(callbackCount == 1, "Client did connect");
       test.done();
     });
   }
