@@ -1,6 +1,7 @@
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mkozjak/node-telnet-client/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/mkozjak/node-telnet-client.svg?branch=master)](https://travis-ci.org/mkozjak/node-telnet-client)
-
-[![Coverage Status](https://coveralls.io/repos/mkozjak/node-telnet-client/badge.svg?branch=master)](https://coveralls.io/r/mkozjak/node-telnet-client?branch=master)
+[![Coverage Status](https://coveralls.io/repos/mkozjak/node-telnet-client/badge.svg?branch=master)](https://coveralls.io/r/mkozjak/node-telnet-client?branch=master)  
+[![NPM](https://nodei.co/npm/telnet-client.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/telnet-client/)
 
 # node-telnet-client
 
