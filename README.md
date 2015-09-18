@@ -67,6 +67,7 @@ of inactivity on the socket.
 * `shellPrompt`: Shell prompt that the host is using. Defaults to regex '/(?:\/ )?#\s/'.
 * `loginPrompt`: Username/login prompt that the host is using. Defaults to regex '/login[: ]*$/i'.
 * `passwordPrompt`: Username/login prompt that the host is using. Defaults to regex '/Password: /i'.
+* `loginFailedPrompt`: String or regex to match if your host provides login failure messages. Defaults to undefined.
 * `username`: Username used to login. Defaults to 'root'.
 * `password`: Username used to login. Defaults to 'guest'.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
@@ -84,6 +85,7 @@ Options:
 
 * `shellPrompt`: Shell prompt that the host is using. Defaults to regex '/(?:\/ )?#\s/'.
 * `loginPrompt`: Username/login prompt that the host is using. Defaults to regex '/login[: ]*$/i'.
+* `loginFailedPrompt`: String or regex to match if your host provides login failure messages. Defaults to undefined.
 * `timeout`: Sets the socket to timeout after the specified number of milliseconds
 of inactivity on the socket.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
@@ -115,6 +117,10 @@ Emitted when the write of given data is sent to the socket.
 
 Emitted if the socket times out from inactivity. This is only to notify that the socket has been idle.
 The user must manually close the connection.
+
+### Event: 'loginfailed'
+
+Emitted when the loginFailedPrompt pattern is provided and a match is found from the host. The 'destroy()' method is called directly following this event.
 
 ### Event: 'error'
 
