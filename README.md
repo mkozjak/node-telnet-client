@@ -30,7 +30,7 @@ var params = {
   // removeEcho: 4
 };
 
-connection.on('ready', function(prompt) {
+connection.on('connect', function(prompt) {
   connection.exec(cmd, function(response) {
     console.log(response);
   });
@@ -104,7 +104,7 @@ Ensures that no more I/O activity happens on this socket. Only necessary in case
 
 Emitted when a socket connection is successfully established.
 
-### Event: 'ready'
+### Event: 'connect'
 
 Emitted when a socket connection is successfully established and the client is successfully connected to the specified remote host.
 A value of prompt is passed as the first argument to the callback.
