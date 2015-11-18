@@ -3,3 +3,5 @@ lib-cov/
 *.log
 *.swp
 *.swo
+*.iml
+.idea/
