@@ -118,7 +118,7 @@ Emitted when the write of given data is sent to the socket.
 Emitted if the socket times out from inactivity. This is only to notify that the socket has been idle.
 The user must manually close the connection.
 
-### Event: 'loginfailed'
+### Event: 'failedlogin'
 
 Emitted when the loginFailedPrompt pattern is provided and a match is found from the host. The 'destroy()' method is called directly following this event.
 
