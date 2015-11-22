@@ -138,7 +138,7 @@ of inactivity on the socket.
 
 Sends data on the socket (should be a compatible remote host's command if sane information is wanted).
 The optional callback parameter will be executed with an error and response when the command is finally written out and the response data has been received.  
-** important notice/API change from 0.3.0 **
+_*** important notice/API change from 0.3.0 ***_  
 If there was no error when executing the command, 'error' as the first argument will be undefined.
 Command result will be passed as the second argument to the callback.
 
