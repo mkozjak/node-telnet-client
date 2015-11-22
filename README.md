@@ -140,8 +140,9 @@ Sends data on the socket (should be a compatible remote host's command if sane i
 The optional callback parameter will be executed with an error and response when the command is finally written out and the response data has been received.  
 If there was no error when executing the command, 'error' as the first argument to the callback will be undefined.
 Command result will be passed as the second argument to the callback.  
+
 __*** important notice/API change from 0.3.0 ***__  
-The callback argument is not called with a signature of (error, [response])  
+The callback argument is now called with a signature of (error, [response])  
 
 Options:
 
