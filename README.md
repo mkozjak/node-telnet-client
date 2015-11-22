@@ -17,6 +17,7 @@ npm install -g telnet-client
 ```
 
 ## Example usage
+### Callback-style
 
 ```js
 var telnet = require('telnet-client');
@@ -48,6 +49,64 @@ connection.on('close', function() {
 connection.connect(params);
 ```
 
+### Promises
+
+```js
+var telnet = require('telnet-client');
+var connection = new telnet();
+
+var params = {
+  host: '127.0.0.1',
+  port: 23,
+  shellPrompt: '/ # ',
+  timeout: 1500,
+  // removeEcho: 4
+};
+
+connection.connect(params)
+.then(function(prompt) {
+  connection.exec(cmd)
+  .then(function(res) {
+    console.log('promises result:', res)
+  })
+}, function(error) {
+  console.log('promises reject:', error)
+});
+```
+
+### Generators
+
+```js
+var co = require('co')
+var bluebird = require('bluebird')
+var telnet = require('telnet-client');
+var connection = new telnet();
+
+var params = {
+  host: '127.0.0.1',
+  port: 23,
+  shellPrompt: '/ # ',
+  timeout: 1500,
+  // removeEcho: 4
+};
+
+// using 'co'
+co(function*() {
+  yield connection.connect(params)
+
+  let res = yield connection.exec(cmd)
+  console.log('coroutine result:', res)
+})
+
+// using 'bluebird'
+Promise.coroutine(function*() {
+  yield connection.connect(params)
+
+  let res = yield connection.exec(cmd)
+  console.log('coroutine result:', res)
+})()
+```
+
 ## API
 
 ```js
@@ -55,7 +114,7 @@ var telnet = require('telnet-client');
 var connection = new telnet();
 ```
 
-### connection.connect(options)
+### connection.connect(options) -> Promise
 
 Creates a new TCP connection to the specified host, where 'options' is an object
 which can include following properties:
@@ -75,11 +134,13 @@ of inactivity on the socket.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
 * `pageSeparator`: The pattern used (and removed from final output) for breaking the number of lines on output. Defaults to '---- More'.
 
-### connection.exec(data, [options], [callback])
+### connection.exec(data, [options], [callback]) -> Promise
 
 Sends data on the socket (should be a compatible remote host's command if sane information is wanted).
-The optional callback parameter will be executed when the data is finally written out - this may not be immediately.
-Command result will be passed as the first argument to the callback.
+The optional callback parameter will be executed with an error and response when the command is finally written out and the response data has been received.  
+** important notice/API change from 0.3.0 **
+If there was no error when executing the command, 'error' as the first argument will be undefined.
+Command result will be passed as the second argument to the callback.
 
 Options:
 
@@ -92,11 +153,11 @@ of inactivity on the socket.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
 
-### connection.end()
+### connection.end() -> Promise
 
 Half-closes the socket. i.e., it sends a FIN packet. It is possible the server will still send some data.
 
-### connection.destroy()
+### connection.destroy() -> Promise
 
 Ensures that no more I/O activity happens on this socket. Only necessary in case of errors (parse error or so).
 
