@@ -5,9 +5,9 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "0.2.2",
+  "version": "0.3.0",
   "main": "./lib/telnet-client.js",
-  "engine": "node >= 0.10.23",
+  "engine": "node >= 0.10.29",
   "license": "MIT",
   "dependencies": {
     "bluebird": "3.0.5"
@@ -28,7 +28,7 @@
   "contributors": [
     {
       "name": "Petar Koretic",
-      "email": "petar.koretic@sartura.hr"
+      "email": "petar.koretic@gmail.com"
     }
   ]
 }
