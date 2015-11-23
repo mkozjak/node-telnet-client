@@ -133,6 +133,7 @@ of inactivity on the socket.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
 * `pageSeparator`: The pattern used (and removed from final output) for breaking the number of lines on output. Defaults to '---- More'.
+* `debug`: Enable/disable debug logs on console. Defaults to false.
 
 ### connection.exec(data, [options], [callback]) -> Promise
 
