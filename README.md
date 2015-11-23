@@ -32,7 +32,7 @@ var params = {
 };
 
 connection.on('ready', function(prompt) {
-  connection.exec(cmd, function(response) {
+  connection.exec(cmd, function(err, response) {
     console.log(response);
   });
 });
