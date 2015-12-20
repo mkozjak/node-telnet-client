@@ -1,6 +1,6 @@
 {
   "name": "telnet-client",
-  "description": "Simple node.js telnet client",
+  "description": "A simple node.js telnet client",
   "author": {
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
@@ -15,7 +15,8 @@
   "devDependencies": {
     "coveralls": "^2.11.x",
     "jscoverage": "^0.6.x",
-    "nodeunit": ">= 0.9.x"
+    "nodeunit": ">= 0.9.x",
+    "telnet": "0.0.1"
   },
   "scripts": {
     "test": "nodeunit test",
