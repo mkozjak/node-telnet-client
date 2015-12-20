@@ -6,7 +6,7 @@ var net = require('net')
 
 var socket, server, callbackCount
 
-exports['socket'] = nodeunit.testCase({
+exports['generic'] = nodeunit.testCase({
   setUp: function(callback) {
     socket = new telnet()
     callbackCount = 0
