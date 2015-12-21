@@ -3,6 +3,7 @@ var telnet = process.env.NODETELNETCLIENT_COV
   : require('../lib/telnet-client')
 var nodeunit = require('nodeunit')
 var telnet_server = require('telnet')
+
 var srv
 
 exports['busybox'] = nodeunit.testCase({
@@ -29,9 +30,9 @@ exports['busybox'] = nodeunit.testCase({
     })
   },
 
-  command: function(test) {
+  exec_string_shellprompt: function(test) {
     var connection = new telnet()
-    
+
     var params = {
       host: '127.0.0.1',
       port: 2323,
@@ -48,6 +49,28 @@ exports['busybox'] = nodeunit.testCase({
       })
     })
     
+    connection.connect(params);
+  },
+
+  exec_regex_shellprompt: function(test) {
+    var connection = new telnet()
+
+    var params = {
+      host: '127.0.0.1',
+      port: 2323,
+      shellPrompt: /\/ #(?: )?/,
+      timeout: 1500
+    }
+
+    connection.on('ready', function(prompt) {
+      connection.exec('uptime', function(err, resp) {
+        connection.end()
+
+        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41')
+        test.done()
+      })
+    })
+
     connection.connect(params);
   }
 })
