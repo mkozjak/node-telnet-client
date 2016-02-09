@@ -132,6 +132,7 @@ of inactivity on the socket.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
+* `stripShellPrompt`: Whether shell prompt should be excluded from the results. Defaults to true.
 * `pageSeparator`: The pattern used (and removed from final output) for breaking the number of lines on output. Defaults to '---- More'.
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
