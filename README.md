@@ -180,7 +180,7 @@ Emitted when the write of given data is sent to the socket.
 
 ### Event: 'data'
 
-This is a forwarded 'data' event from core 'net' library. A <buffer> is received when this event is triggered.
+This is a forwarded 'data' event from core 'net' library. A `<buffer>` is received when this event is triggered.
 
 ### Event: 'timeout'
 
