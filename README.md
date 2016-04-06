@@ -178,6 +178,10 @@ A value of prompt is passed as the first argument to the callback.
 
 Emitted when the write of given data is sent to the socket.
 
+### Event: 'data'
+
+This is a forwarded 'data' event from core 'net' library. A <buffer> is received when this event is triggered.
+
 ### Event: 'timeout'
 
 Emitted if the socket times out from inactivity. This is only to notify that the socket has been idle.
