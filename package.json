@@ -5,7 +5,7 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "./lib/telnet-client.js",
   "engine": "node >= 0.10.29",
   "license": "MIT",
