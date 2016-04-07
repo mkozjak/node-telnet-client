@@ -135,7 +135,7 @@ of inactivity on the socket.
 * `stripShellPrompt`: Whether shell prompt should be excluded from the results. Defaults to true.
 * `pageSeparator`: The pattern used (and removed from final output) for breaking the number of lines on output. Defaults to '---- More'.
 * `negotiationMandatory`: Disable telnet negotiations if needed. Can be used with 'send' when telnet specification is not needed. Defaults to true.
-* `sendTimeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms).
+* `sendTimeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms) or to sendTimeout ('connect' method) if set.
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
 ### connection.exec(data, [options], [callback]) -> Promise
