@@ -6,7 +6,7 @@ var telnet_server = require('telnet')
 
 var srv
 
-exports['busybox'] = nodeunit.testCase({
+exports['server_push'] = nodeunit.testCase({
   setUp: function(callback) {
     srv = telnet_server.createServer(function(c) {
       c.write(new Buffer("BusyBox v1.19.2 () built-in shell (ash)\n"
