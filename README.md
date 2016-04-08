@@ -134,8 +134,9 @@ of inactivity on the socket.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
 * `stripShellPrompt`: Whether shell prompt should be excluded from the results. Defaults to true.
 * `pageSeparator`: The pattern used (and removed from final output) for breaking the number of lines on output. Defaults to '---- More'.
-* `negotiationMandatory`: Disable telnet negotiations if needed. Can be used with 'send' when telnet specification is not needed. Defaults to true.
-* `sendTimeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms) or to sendTimeout ('connect' method) if set.
+* `negotiationMandatory`: Disable telnet negotiations if needed. Can be used with 'send' when telnet specification is not needed.
+Telnet client will then basically act like a simple TCP client. Defaults to true.
+* `sendTimeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms).
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
 ### connection.exec(data, [options], [callback]) -> Promise
@@ -166,8 +167,8 @@ Sends data on the socket without requiring telnet negotiations.
 Options:
 
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
-* `waitfor`: Wait for the given string before returning a response
-* `timeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms).
+* `waitfor`: Wait for the given string before returning a response. If not defined, the timeout value will be used.
+* `timeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms) or to sendTimeout ('connect' method) if set.
 
 ### connection.end() -> Promise
 
