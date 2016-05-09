@@ -99,7 +99,7 @@ co(function*() {
 })
 
 // using 'bluebird'
-Promise.coroutine(function*() {
+bluebird.coroutine(function*() {
   yield connection.connect(params)
 
   let res = yield connection.exec(cmd)
