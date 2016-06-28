@@ -107,6 +107,41 @@ bluebird.coroutine(function*() {
 })()
 ```
 
+### Async/Await (using babeljs)
+
+```js
+'use strict'
+
+const Promise = require('bluebird')
+const telnet = require('telnet-client')
+
+require('babel-runtime/core-js/promise').default = Promise
+
+Promise.onPossiblyUnhandledRejection(function(error) {
+  throw error
+})
+
+// also requires additional babeljs setup
+
+async function run() {
+  let connection = new telnet()
+
+  let params = {
+    host: '127.0.0.1',
+    port: 23,
+    shellPrompt: '/ # ',
+    timeout: 1500
+  }
+
+  await connection.connect(params)
+
+  let res = await connection.exec(cmd)
+  console.log('async result:', res)
+}
+
+run()
+```
+
 ## API
 
 ```js
