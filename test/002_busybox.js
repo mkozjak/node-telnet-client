@@ -44,7 +44,7 @@ exports['busybox'] = nodeunit.testCase({
       connection.exec('uptime', function(err, resp) {
         connection.end()
 
-        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41')
+        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
         test.done()
       })
     })
@@ -66,7 +66,7 @@ exports['busybox'] = nodeunit.testCase({
       connection.exec('uptime', function(err, resp) {
         connection.end()
 
-        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41')
+        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
         test.done()
       })
     })
