@@ -10,7 +10,7 @@
   "engine": "node >= 0.10.29",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.0.5"
+    "bluebird": "3.4.x"
   },
   "devDependencies": {
     "coveralls": "^2.11.x",
