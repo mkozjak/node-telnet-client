@@ -30,7 +30,7 @@ exports['generic'] = nodeunit.testCase({
   connect: function(test) {
     socket.connect({
       host: '127.0.0.1',
-      port: 2323 //not using 23 is a service port could need sudo 
+      port: 2323 // not using 23, as that one could require sudo
     })
 
     socket.on('connect', function() {
