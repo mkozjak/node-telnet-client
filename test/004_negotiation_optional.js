@@ -13,7 +13,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
         c.write(new Buffer("Hello, user.\n"))
       })
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
@@ -44,7 +44,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
         connection.end()
       })
     })
-    
+
     connection.connect(params);
   }
 })
