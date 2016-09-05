@@ -6,7 +6,7 @@
     "email": "kozjakm1@gmail.com"
   },
   "version": "0.10.1",
-  "main": "./lib/telnet-client.js",
+  "main": "./lib/index.js",
   "engine": "node >= 0.10.29",
   "license": "MIT",
   "dependencies": {
