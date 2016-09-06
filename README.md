@@ -172,6 +172,7 @@ of inactivity on the socket.
 * `pageSeparator`: The pattern used (and removed from final output) for breaking the number of lines on output. Defaults to '---- More'.
 * `negotiationMandatory`: Disable telnet negotiations if needed. Can be used with 'send' when telnet specification is not needed.
 Telnet client will then basically act like a simple TCP client. Defaults to true.
+* `execTimeout`: A timeout used to wait for a server reply when the 'exec' method is used. Defaults to 2000 (ms).
 * `sendTimeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms).
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
@@ -192,6 +193,7 @@ Options:
 * `failedLoginMatch`: String or regex to match if your host provides login failure messages. Defaults to undefined.
 * `timeout`: Sets the socket to timeout after the specified number of milliseconds
 of inactivity on the socket.
+* `execTimeout`: A timeout used to wait for a server reply when this method is used. Defaults to 'undefined'.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
