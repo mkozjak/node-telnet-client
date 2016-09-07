@@ -54,7 +54,8 @@ exports['negotiation_optional'] = nodeunit.testCase({
     var params = {
       host: '127.0.0.1',
       port: 2323,
-      negotiationMandatory: false
+      negotiationMandatory: false,
+      sendTimeout: 100
     }
 
     connection.on('connect', function() {
@@ -74,7 +75,8 @@ exports['negotiation_optional'] = nodeunit.testCase({
     var params = {
       host: '127.0.0.1',
       port: 2323,
-      negotiationMandatory: false
+      negotiationMandatory: false,
+      sendTimeout: 100
     }
 
     connection.connect(params).then(function() {
