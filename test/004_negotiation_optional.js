@@ -77,9 +77,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
       negotiationMandatory: false
     }
 
-    let ok = connection.connect(params)
-
-    ok.then(function() {
+    connection.connect(params).then(function() {
       connection.send('Hello, server.').then(function(data) {
         test.strictEqual(data.toString(), 'Hello, user.\r\n')
         test.done()
