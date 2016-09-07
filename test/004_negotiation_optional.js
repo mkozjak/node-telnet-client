@@ -46,5 +46,45 @@ exports['negotiation_optional'] = nodeunit.testCase({
     })
 
     connection.connect(params);
+  },
+
+  send_data_without_options: function(test) {
+    var connection = new telnet()
+
+    var params = {
+      host: '127.0.0.1',
+      port: 2323,
+      negotiationMandatory: false
+    }
+
+    connection.on('connect', function() {
+      connection.send('Hello, server.', function(error, data) {
+        test.strictEqual(data.toString(), 'Hello, user.\r\n')
+        test.done()
+        connection.end()
+      })
+    })
+
+    connection.connect(params)
+  },
+
+  send_data_without_options_promise: function(test) {
+    var connection = new telnet()
+
+    var params = {
+      host: '127.0.0.1',
+      port: 2323,
+      negotiationMandatory: false
+    }
+
+    let ok = connection.connect(params)
+
+    ok.then(function() {
+      connection.send('Hello, server.').then(function(data) {
+        test.strictEqual(data.toString(), 'Hello, user.\r\n')
+        test.done()
+        connection.end()
+      })
+    })
   }
 })
