@@ -17,7 +17,7 @@ npm install telnet-client
 npm install -g telnet-client
 ```
 
-## Example usage
+## Usage example
 ### Callback-style
 
 ```js
