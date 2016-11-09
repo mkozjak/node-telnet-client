@@ -5,9 +5,9 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "0.10.7",
+  "version": "0.11.0",
   "main": "./lib/index.js",
-  "engine": "node >= 0.10.29",
+  "engine": "node >= 6.9.1",
   "license": "MIT",
   "dependencies": {
     "bluebird": "3.4.x"
