@@ -22,9 +22,11 @@ npm install -g telnet-client
 Since version 0.11.x, we have moved from using ```new Buffer``` to ```Buffer.from```,
 because when the library is used with latest Node.js, it issues a deprecation warning
 (see [PR #63](https://github.com/mkozjak/node-telnet-client/pull/63)).
+Also, since version 0.12.x, we have moved to ECMAScript 6 to utilize class and scoping features.
+
 This means we have moved exclusively to Current and LTS Node.js releases.
 Should there be any problems with it, please check if the corresponding issue is opened,
-and if not, open the issue so we can reach out and try to solve the deprecation problem.
+and if not, open it so we can reach out and try to solve the deprecation problem.
 
 ## Usage example
 ### Callback-style
