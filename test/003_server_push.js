@@ -16,7 +16,7 @@ exports['server_push'] = nodeunit.testCase({
         c.write(new Buffer("Hello, client!", 'ascii'))
       }, 50)
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
@@ -44,7 +44,7 @@ exports['server_push'] = nodeunit.testCase({
       test.strictEqual(data.toString(), 'Hello, client!')
       test.done()
     })
-    
+
     connection.connect(params);
   }
 })
