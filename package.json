@@ -5,7 +5,7 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "0.12.0",
+  "version": "0.12.1",
   "main": "./lib/index.js",
   "engine": "node >= 6.9.1",
   "license": "MIT",
@@ -49,6 +49,9 @@
     {
       "name": "Peter Halliday",
       "email": "pghalliday@gmail.com"
+    },
+    {
+      "name": "kaYcee"
     }
   ]
 }
