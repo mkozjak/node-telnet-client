@@ -185,6 +185,7 @@ of inactivity on the socket.
 Telnet client will then basically act like a simple TCP client. Defaults to true.
 * `execTimeout`: A timeout used to wait for a server reply when the 'exec' method is used. Defaults to 2000 (ms).
 * `sendTimeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms).
+* `maxBufferLength`: Maximum buffer length in bytes which can be filled with response data. Defaults to 1M.
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
 ### connection.exec(data, [options], [callback]) -> Promise
@@ -205,6 +206,7 @@ Options:
 * `timeout`: Sets the socket to timeout after the specified number of milliseconds
 of inactivity on the socket.
 * `execTimeout`: A timeout used to wait for a server reply when this method is used. Defaults to 'undefined'.
+* `maxBufferLength`: Maximum buffer length in bytes which can be filled with response data. Defaults to 1M.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
@@ -218,6 +220,7 @@ Options:
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `waitfor`: Wait for the given string before returning a response. If not defined, the timeout value will be used.
 * `timeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms) or to sendTimeout ('connect' method) if set.
+* `maxBufferLength`: Maximum buffer length in bytes which can be filled with response data. Defaults to 1M.
 
 ### connection.end() -> Promise
 
