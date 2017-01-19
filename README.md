@@ -222,6 +222,10 @@ Options:
 * `timeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms) or to sendTimeout ('connect' method) if set.
 * `maxBufferLength`: Maximum buffer length in bytes which can be filled with response data. Defaults to 1M.
 
+### connection.shell(callback) -> Promise
+
+Starts an interactive shell session. Returns a duplex stream which can be used to read and write data.
+
 ### connection.end() -> Promise
 
 Half-closes the socket. i.e., it sends a FIN packet. It is possible the server will still send some data.
