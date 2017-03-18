@@ -175,7 +175,7 @@ of inactivity on the socket.
 * `passwordPrompt`: Username/login prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/Password: /i'.
 * `failedLoginMatch`: String or regex to match if your host provides login failure messages. Defaults to undefined.
 * `username`: Username used to login. Defaults to 'root'.
-* `password`: Username used to login. Defaults to 'guest'.
+* `password`: Password used to login. Defaults to 'guest'.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
