@@ -188,6 +188,8 @@ Telnet client will then basically act like a simple TCP client. Defaults to true
 * `maxBufferLength`: Maximum buffer length in bytes which can be filled with response data. Defaults to 1M.
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
+Resolves once the connection is ready (analogous to the ```ready``` event).
+
 ### connection.exec(data, [options], [callback]) -> Promise
 
 Sends data on the socket (should be a compatible remote host's command if sane information is wanted).
