@@ -273,3 +273,7 @@ Emitted when the other end of the socket (remote host) sends a FIN packet.
 ### Event: 'close'
 
 Emitted once the socket is fully closed.
+
+## License
+
+  [MIT](LICENSE)
