@@ -176,6 +176,7 @@ of inactivity on the socket.
 * `failedLoginMatch`: String or regex to match if your host provides login failure messages. Defaults to undefined.
 * `username`: Username used to login. Defaults to 'root'.
 * `password`: Password used to login. Defaults to 'guest'.
+* `sock`: Duplex stream which can be used for connection hopping/reusing.
 * `irs`: Input record separator. A separator used to distinguish between lines of the response. Defaults to '\r\n'.
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
 * `echoLines`: The number of lines used to cut off the response. Defaults to 1.
@@ -227,6 +228,10 @@ Options:
 ### connection.shell(callback) -> Promise
 
 Starts an interactive shell session. Returns a duplex stream which can be used to read and write data.
+
+### connection.getSocket() -> net.Socket
+
+Returns a duplex stream that can be used for connection hopping. See 'sock' option.
 
 ### connection.end() -> Promise
 
