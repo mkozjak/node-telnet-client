@@ -60,7 +60,7 @@ exports['login'] = nodeunit.testCase({
       })
     })
 
-    connection.connect(params);
+    connection.connect(params)
   },
 
   fail: function(test) {
@@ -89,6 +89,6 @@ exports['login'] = nodeunit.testCase({
       test.done()
     })
 
-    connection.connect(params);
+    connection.connect(params)
   }
 })
