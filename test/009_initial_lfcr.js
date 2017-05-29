@@ -6,7 +6,7 @@ var telnet_server = require('telnet')
 
 var srv
 
-exports['busybox'] = nodeunit.testCase({
+exports['initial_lfcr'] = nodeunit.testCase({
   setUp: function(callback) {
     srv = telnet_server.createServer(function(c) {
       var initialSent = false
