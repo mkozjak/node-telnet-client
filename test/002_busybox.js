@@ -49,7 +49,7 @@ exports['busybox'] = nodeunit.testCase({
       })
     })
     
-    connection.connect(params);
+    connection.connect(params)
   },
 
   exec_regex_shellprompt: function(test) {
@@ -71,6 +71,6 @@ exports['busybox'] = nodeunit.testCase({
       })
     })
 
-    connection.connect(params);
+    connection.connect(params)
   }
 })

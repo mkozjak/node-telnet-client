@@ -52,6 +52,6 @@ exports['stress'] = nodeunit.testCase({
       })
     })
     
-    connection.connect(params);
+    connection.connect(params)
   }
 })

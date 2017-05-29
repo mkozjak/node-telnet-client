@@ -45,6 +45,6 @@ exports['server_push'] = nodeunit.testCase({
       test.done()
     })
 
-    connection.connect(params);
+    connection.connect(params)
   }
 })

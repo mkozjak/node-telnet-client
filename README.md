@@ -32,8 +32,8 @@ and if not, open it so we can reach out and try to solve the deprecation problem
 ### Callback-style
 
 ```js
-var telnet = require('telnet-client');
-var connection = new telnet();
+var telnet = require('telnet-client')
+var connection = new telnet()
 
 var params = {
   host: '127.0.0.1',
@@ -41,31 +41,31 @@ var params = {
   shellPrompt: '/ # ',
   timeout: 1500,
   // removeEcho: 4
-};
+}
 
 connection.on('ready', function(prompt) {
   connection.exec(cmd, function(err, response) {
-    console.log(response);
-  });
-});
+    console.log(response)
+  })
+})
 
 connection.on('timeout', function() {
   console.log('socket timeout!')
-  connection.end();
-});
+  connection.end()
+})
 
 connection.on('close', function() {
-  console.log('connection closed');
-});
+  console.log('connection closed')
+})
 
-connection.connect(params);
+connection.connect(params)
 ```
 
 ### Promises
 
 ```js
-var telnet = require('telnet-client');
-var connection = new telnet();
+var telnet = require('telnet-client')
+var connection = new telnet()
 
 var params = {
   host: '127.0.0.1',
@@ -73,7 +73,7 @@ var params = {
   shellPrompt: '/ # ',
   timeout: 1500,
   // removeEcho: 4
-};
+}
 
 connection.connect(params)
 .then(function(prompt) {
@@ -83,7 +83,7 @@ connection.connect(params)
   })
 }, function(error) {
   console.log('promises reject:', error)
-});
+})
 ```
 
 ### Generators
@@ -91,8 +91,8 @@ connection.connect(params)
 ```js
 var co = require('co')
 var bluebird = require('bluebird')
-var telnet = require('telnet-client');
-var connection = new telnet();
+var telnet = require('telnet-client')
+var connection = new telnet()
 
 var params = {
   host: '127.0.0.1',
@@ -100,7 +100,7 @@ var params = {
   shellPrompt: '/ # ',
   timeout: 1500,
   // removeEcho: 4
-};
+}
 
 // using 'co'
 co(function*() {
@@ -157,8 +157,8 @@ run()
 ## API
 
 ```js
-var telnet = require('telnet-client');
-var connection = new telnet();
+var telnet = require('telnet-client')
+var connection = new telnet()
 ```
 
 ### connection.connect(options) -> Promise

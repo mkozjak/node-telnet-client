@@ -45,7 +45,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
       })
     })
 
-    connection.connect(params);
+    connection.connect(params)
   },
 
   send_data_without_options: function(test) {
