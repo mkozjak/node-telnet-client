@@ -5,12 +5,12 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "0.15.0",
+  "version": "0.15.1",
   "main": "./lib/index.js",
   "engine": "node >= 6.9.1",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.4.x"
+    "bluebird": "3.5.x"
   },
   "devDependencies": {
     "coveralls": "^2.11.x",
