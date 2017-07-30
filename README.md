@@ -29,6 +29,32 @@ Should there be any problems with it, please check if the corresponding issue is
 and if not, open it so we can reach out and try to solve the deprecation problem.
 
 ## Usage example
+### Async/Await (Node.js >= 7.6.0)
+
+```js
+'use strict'
+
+const Telnet = require('telnet-client')
+
+async function run() {
+  let connection = new Telnet()
+
+  let params = {
+    host: '127.0.0.1',
+    port: 23,
+    shellPrompt: '/ # ',
+    timeout: 1500
+  }
+
+  await connection.connect(params)
+
+  let res = await connection.exec('uptime')
+  console.log('async result:', res)
+}
+
+run()
+```
+
 ### Callback-style
 
 ```js
