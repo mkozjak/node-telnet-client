@@ -32,8 +32,8 @@ and if not, open it so we can reach out and try to solve the deprecation problem
 ### Callback-style
 
 ```js
-var telnet = require('telnet-client')
-var connection = new telnet()
+var Telnet = require('telnet-client')
+var connection = new Telnet()
 
 var params = {
   host: '127.0.0.1',
@@ -64,8 +64,8 @@ connection.connect(params)
 ### Promises
 
 ```js
-var telnet = require('telnet-client')
-var connection = new telnet()
+var Telnet = require('telnet-client')
+var connection = new Telnet()
 
 var params = {
   host: '127.0.0.1',
@@ -91,8 +91,8 @@ connection.connect(params)
 ```js
 var co = require('co')
 var bluebird = require('bluebird')
-var telnet = require('telnet-client')
-var connection = new telnet()
+var Telnet = require('telnet-client')
+var connection = new Telnet()
 
 var params = {
   host: '127.0.0.1',
@@ -136,7 +136,7 @@ Promise.onPossiblyUnhandledRejection(function(error) {
 // also requires additional babeljs setup
 
 async function run() {
-  let connection = new telnet()
+  let connection = new Telnet()
 
   let params = {
     host: '127.0.0.1',
@@ -157,8 +157,8 @@ run()
 ## API
 
 ```js
-var telnet = require('telnet-client')
-var connection = new telnet()
+var Telnet = require('telnet-client')
+var connection = new Telnet()
 ```
 
 ### connection.connect(options) -> Promise
