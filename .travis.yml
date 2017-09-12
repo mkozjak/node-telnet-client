@@ -1,8 +1,7 @@
 language: node_js
 node_js:
    - "6.11"
-   - "7.10"
-   - "8.2"
+   - "8.4"
 install: npm install
 after_script:
   - npm run coveralls
