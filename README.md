@@ -310,3 +310,7 @@ Emitted once the socket is fully closed.
 ## License
 
   [MIT](LICENSE)
+
+## Donate
+
+If you love this project, consider [donating](https://donate.kozjak.io)!
