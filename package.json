@@ -5,7 +5,7 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "0.15.5",
+  "version": "0.15.7",
   "main": "./lib/index.js",
   "engine": "node >= 6.9.1",
   "license": "MIT",
@@ -13,9 +13,9 @@
     "bluebird": "3.5.x"
   },
   "devDependencies": {
-    "coveralls": "^2.11.x",
+    "coveralls": "^3.0.x",
     "jscoverage": "^0.6.x",
-    "nodeunit": ">= 0.9.x",
+    "nodeunit": ">= 0.11.x",
     "telnet": "0.0.1"
   },
   "scripts": {
