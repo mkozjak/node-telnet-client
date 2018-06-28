@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/mkozjak/node-telnet-client.svg?branch=master)](https://travis-ci.org/mkozjak/node-telnet-client)
 [![Coverage Status](https://coveralls.io/repos/mkozjak/node-telnet-client/badge.svg?branch=master)](https://coveralls.io/r/mkozjak/node-telnet-client?branch=master)  
 [![npm](https://img.shields.io/npm/dm/telnet-client.svg?maxAge=2592000)](https://www.npmjs.com/package/telnet-client)
-[![Donate Bitcoin/Altcoins](https://img.shields.io/badge/donate-coins-blue.svg)](https://donate.kozjak.io)  
+[![Donate Bitcoin/Altcoins](https://img.shields.io/badge/donate-coins-blue.svg)](https://mario.kozjak.io/donate)  
 [![NPM](https://nodei.co/npm/telnet-client.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/telnet-client/)
 
 # node-telnet-client
@@ -313,4 +313,4 @@ Emitted once the socket is fully closed.
 
 ## Donate
 
-If you love this project, consider [donating](https://donate.kozjak.io)!
+If you love this project, consider [donating](https://mario.kozjak.io/donate)!
