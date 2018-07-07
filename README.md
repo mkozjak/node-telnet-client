@@ -307,6 +307,9 @@ Emitted when the other end of the socket (remote host) sends a FIN packet.
 
 Emitted once the socket is fully closed.
 
+## Professional support
+I offer professional support for node-telnet-client and beyond. I have many years of expertise on building robust, scalable Node.js applications and can help you overcome issues and challenges preventing you to ship your great products. I also excel in software architecture and implementation, being able to provide you with development, planning, consulting, training and customization services. Feel free to [contact me](mailto:kozjakm1@gmail.com?subject=Support) so we can discuss how to help you finish your products!
+
 ## License
 
   [MIT](LICENSE)
