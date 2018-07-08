@@ -302,10 +302,10 @@ I offer professional support for node-telnet-client and beyond. I have many year
 ## Sponsors
 Become a sponsor and get your logo on project's README on GitHub with a link to your site. Feel free to [contact me](mailto:kozjakm1@gmail.com?subject=Sponsors) for the arrangement!
 
-## License
-
-  [MIT](LICENSE)
-
 ## Donate
 
 If you love this project, consider [donating](https://mario.kozjak.io/donate)!
+
+## License
+
+  [MIT](LICENSE)
