@@ -29,7 +29,7 @@ This means we have moved exclusively to Current and LTS Node.js releases.
 Should there be any problems with it, please check if the corresponding issue is opened,
 and if not, open it so we can reach out and try to solve the deprecation problem.
 
-## Usage example
+## Quick start
 ### Async/Await (Node.js >= 7.6.0)
 
 ```js
