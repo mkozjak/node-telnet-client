@@ -7,7 +7,7 @@
 
 # node-telnet-client
 
-A simple telnet client for node.js
+A simple telnet client for Node.js
 
 ## Installation
 
