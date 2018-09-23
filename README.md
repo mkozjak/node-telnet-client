@@ -238,7 +238,7 @@ Sends data on the socket without requiring telnet negotiations.
 Options:
 
 * `ors`: Output record separator. A separator used to execute commands (break lines on input). Defaults to '\n'.
-* `waitfor`: Wait for the given string before returning a response. If not defined, the timeout value will be used.
+* `waitfor`: Wait for the given string or RegExp before returning a response. If not defined, the timeout value will be used.
 * `timeout`: A timeout used to wait for a server reply when the 'send' method is used. Defaults to 2000 (ms) or to sendTimeout ('connect' method) if set.
 * `maxBufferLength`: Maximum buffer length in bytes which can be filled with response data. Defaults to 1M.
 
