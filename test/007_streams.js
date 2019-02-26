@@ -1,4 +1,4 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
+var telnet = process.env.NODETELNETCLIENT_COV
   ? require('../lib-cov/index')
   : require('../lib/index')
 var nodeunit = require('nodeunit')
@@ -24,7 +24,7 @@ exports['streams'] = nodeunit.testCase({
         }
       })
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
