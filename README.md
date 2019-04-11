@@ -36,7 +36,11 @@ async function run() {
     timeout: 1500
   }
 
-  await connection.connect(params)
+  try {
+    await connection.connect(params)
+  } catch(error) {
+    // handle the throw (timeout)
+  }
 
   let res = await connection.exec('uptime')
   console.log('async result:', res)
@@ -100,6 +104,9 @@ connection.connect(params)
 }, function(error) {
   console.log('promises reject:', error)
 })
+.catch(function(error) {
+  // handle the throw (timeout)
+})
 ```
 
 ### Generators
@@ -120,7 +127,11 @@ var params = {
 
 // using 'co'
 co(function*() {
-  yield connection.connect(params)
+  try {
+    yield connection.connect(params)
+  } catch (error) {
+    // handle the throw (timeout)
+  }
 
   let res = yield connection.exec(cmd)
   console.log('coroutine result:', res)
@@ -128,7 +139,11 @@ co(function*() {
 
 // using 'bluebird'
 bluebird.coroutine(function*() {
-  yield connection.connect(params)
+  try {
+    yield connection.connect(params)
+  } catch (error) {
+    // handle the throw (timeout)
+  }
 
   let res = yield connection.exec(cmd)
   console.log('coroutine result:', res)
@@ -161,7 +176,11 @@ async function run() {
     timeout: 1500
   }
 
-  await connection.connect(params)
+  try {
+    await connection.connect(params)
+  } catch (error) {
+    // handle the throw (timeout)
+  }
 
   let res = await connection.exec(cmd)
   console.log('async result:', res)
@@ -207,6 +226,7 @@ Telnet client will then basically act like a simple TCP client. Defaults to true
 * `debug`: Enable/disable debug logs on console. Defaults to false.
 
 Resolves once the connection is ready (analogous to the ```ready``` event).
+Rejects if the timeout is hit.
 
 ### connection.exec(data, [options], [callback]) -> Promise
 
