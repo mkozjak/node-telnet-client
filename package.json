@@ -5,15 +5,15 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib/index.js",
   "engine": "node >= 6.9.1",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.5.x"
+    "bluebird": "^3.5.4"
   },
   "devDependencies": {
-    "coveralls": "^3.0.x",
+    "coveralls": "^3.0.3",
     "jscoverage": "^0.6.x",
     "nodeunit": "^0.11.3",
     "telnet": "0.0.1"
