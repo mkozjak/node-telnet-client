@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.3",
+    "extend": "^3.0.2",
     "jscoverage": "^0.6.x",
     "nodeunit": "^0.11.3",
     "telnet": "0.0.1"
