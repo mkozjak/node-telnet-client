@@ -28,6 +28,7 @@ const Telnet = require('telnet-client')
 async function run() {
   let connection = new Telnet()
 
+  // these parameters are just examples and most probably won't work for your use-case.
   let params = {
     host: '127.0.0.1',
     port: 23,
@@ -54,6 +55,7 @@ run()
 var Telnet = require('telnet-client')
 var connection = new Telnet()
 
+// these parameters are just examples and most probably won't work for your use-case.
 var params = {
   host: '127.0.0.1',
   port: 23,
@@ -86,6 +88,7 @@ connection.connect(params)
 var Telnet = require('telnet-client')
 var connection = new Telnet()
 
+// these parameters are just examples and most probably won't work for your use-case.
 var params = {
   host: '127.0.0.1',
   port: 23,
@@ -116,6 +119,7 @@ var bluebird = require('bluebird')
 var Telnet = require('telnet-client')
 var connection = new Telnet()
 
+// these parameters are just examples and most probably won't work for your use-case.
 var params = {
   host: '127.0.0.1',
   port: 23,
@@ -168,6 +172,7 @@ Promise.onPossiblyUnhandledRejection(function(error) {
 async function run() {
   let connection = new Telnet()
 
+  // these parameters are just examples and most probably won't work for your use-case.
   let params = {
     host: '127.0.0.1',
     port: 23,
