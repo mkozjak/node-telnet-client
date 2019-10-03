@@ -5,7 +5,7 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "engine": "node >= 6.9.1",
