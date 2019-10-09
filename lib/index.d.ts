@@ -5,6 +5,7 @@ import { Socket } from 'net';
 declare interface ConnectOptions {
     host?: string;
     port?: number;
+    localAddress?: string;
     timeout?: number;
     shellPrompt?: string;
     loginPrompt?: string|RegExp;

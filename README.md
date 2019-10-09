@@ -207,6 +207,7 @@ which can include following properties:
 
 * `host`: Host the client should connect to. Defaults to '127.0.0.1'.
 * `port`: Port the client should connect to. Defaults to '23'.
+* `localAddress`: Local interface to bind for network connections. Defaults to an empty string. More information can be found [here](https://nodejs.org/api/net.html#net_socket_localaddress)
 * `timeout`: Sets the socket to timeout after the specified number of milliseconds
 of inactivity on the socket.
 * `shellPrompt`: Shell prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/(?:\/ )?#\s/'.
