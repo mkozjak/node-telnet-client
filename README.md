@@ -208,6 +208,7 @@ which can include following properties:
 * `host`: Host the client should connect to. Defaults to '127.0.0.1'.
 * `port`: Port the client should connect to. Defaults to '23'.
 * `localAddress`: Local interface to bind for network connections. Defaults to an empty string. More information can be found [here](https://nodejs.org/api/net.html#net_socket_localaddress).
+* `socketConnectOptions`: Allows to pass an object, which can contain every property from Node's SocketConnectOpts. Defaults to an empty object. Properties defined inside this object will overwrite any of the three above properties. More information can be found [here](https://nodejs.org/dist/latest-v12.x/docs/api/net.html#net_socket_connect_options_connectlistener).
 * `timeout`: Sets the socket to timeout after the specified number of milliseconds.
 of inactivity on the socket.
 * `shellPrompt`: Shell prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/(?:\/ )?#\s/'.

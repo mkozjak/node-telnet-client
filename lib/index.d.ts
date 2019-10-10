@@ -1,11 +1,12 @@
 import { EventEmitter } from 'events';
 import { Stream } from 'stream';
-import { Socket } from 'net';
+import { Socket, SocketConnectOpts } from 'net';
 
 declare interface ConnectOptions {
     host?: string;
     port?: number;
     localAddress?: string;
+    socketConnectOptions?: SocketConnectOpts;
     timeout?: number;
     shellPrompt?: string;
     loginPrompt?: string|RegExp;
