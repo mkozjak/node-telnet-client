@@ -21,10 +21,10 @@ declare interface ConnectOptions {
     echoLines?: number;
     pageSeparator?: string|RegExp;
     negotiationMandatory?: boolean;
-    execTimeout: number;
-    sendTimeout: number;
-    sendTmaxBufferLengthimeout: number;
-    debug: boolean;
+    execTimeout?: number;
+    sendTimeout?: number;
+    sendTmaxBufferLengthimeout?: number;
+    debug?: boolean;
 }
 
 declare interface ExecOptions {
