@@ -46,7 +46,7 @@ declare interface SendOptions {
     maxBufferLength?: number;
 }
 
-export default class telnet_client extends EventEmitter implements ConnectOptions {
+export default class telnet_client extends EventEmitter {
     constructor();
 
     connect(params: ConnectOptions): Promise<void>;
