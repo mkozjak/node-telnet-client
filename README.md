@@ -32,7 +32,7 @@ async function run() {
   let params = {
     host: '127.0.0.1',
     port: 23,
-    shellPrompt: '/ # ',
+    shellPrompt: '/ # ', // or negotiationMandatory: false
     timeout: 1500
   }
 
@@ -59,7 +59,7 @@ var connection = new Telnet()
 var params = {
   host: '127.0.0.1',
   port: 23,
-  shellPrompt: '/ # ',
+  shellPrompt: '/ # ', // or negotiationMandatory: false
   timeout: 1500,
   // removeEcho: 4
 }
@@ -92,7 +92,7 @@ var connection = new Telnet()
 var params = {
   host: '127.0.0.1',
   port: 23,
-  shellPrompt: '/ # ',
+  shellPrompt: '/ # ', // or negotiationMandatory: false
   timeout: 1500,
   // removeEcho: 4
 }
@@ -123,7 +123,7 @@ var connection = new Telnet()
 var params = {
   host: '127.0.0.1',
   port: 23,
-  shellPrompt: '/ # ',
+  shellPrompt: '/ # ', // or negotiationMandatory: false
   timeout: 1500,
   // removeEcho: 4
 }
@@ -176,7 +176,7 @@ async function run() {
   let params = {
     host: '127.0.0.1',
     port: 23,
-    shellPrompt: '/ # ',
+    shellPrompt: '/ # ', // or negotiationMandatory: false
     timeout: 1500
   }
 
@@ -211,7 +211,7 @@ which can include following properties:
 * `socketConnectOptions`: Allows to pass an object, which can contain every property from Node's SocketConnectOpts. Defaults to an empty object. Properties defined inside this object will overwrite any of the three above properties. More information can be found [here](https://nodejs.org/dist/latest-v12.x/docs/api/net.html#net_socket_connect_options_connectlistener).
 * `timeout`: Sets the socket to timeout after the specified number of milliseconds.
 of inactivity on the socket.
-* `shellPrompt`: Shell prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/(?:\/ )?#\s/'.
+* `shellPrompt`: Shell prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/(?:\/ )?#\s/'. Use `negotiationMandatory: false` if you don't need this.
 * `loginPrompt`: Username/login prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/login[: ]*$/i'.
 * `passwordPrompt`: Password/login prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/Password: /i'.
 * `failedLoginMatch`: String or regex to match if your host provides login failure messages. Defaults to undefined.
