@@ -330,7 +330,7 @@ Become a sponsor and get your logo on project's README on GitHub with a link to 
 
 ## Donate
 
-If you love this project, consider [donating](https://mario.kozjak.io/donate)!
+If you love this project, consider [donating](https://paypal.me/kozjak)!
 
 ## License
 
