@@ -334,4 +334,4 @@ If you love this project, consider [donating](https://paypal.me/kozjak)!
 
 ## License
 
-  [MIT](LICENSE)
+This library is licensed under LGPLv3. Please see [LICENSE](LICENSE) for licensing details.
