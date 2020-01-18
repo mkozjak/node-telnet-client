@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/mkozjak/node-telnet-client/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/mkozjak/node-telnet-client/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/mkozjak/node-telnet-client.svg?branch=master)](https://travis-ci.org/mkozjak/node-telnet-client)
 [![npm](https://img.shields.io/npm/dm/telnet-client.svg?maxAge=2592000)](https://www.npmjs.com/package/telnet-client)
 [![Donate Bitcoin/Altcoins](https://img.shields.io/badge/donate-coins-blue.svg)](https://paypal.me/kozjak)  
