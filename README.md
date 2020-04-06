@@ -215,6 +215,7 @@ of inactivity on the socket.
 * `loginPrompt`: Username/login prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/login[: ]*$/i'.
 * `passwordPrompt`: Password/login prompt that the host is using. Can be a string or an instance of RegExp. Defaults to regex '/Password: /i'.
 * `failedLoginMatch`: String or regex to match if your host provides login failure messages. Defaults to undefined.
+* `initialCTRLC`: Flag used to determine if an initial 0x03 (CTRL+C) should be sent when connected to server.
 * `initialLFCR`: Flag used to determine if an initial '\r\n' (CR+LF) should be sent when connected to server.
 * `username`: Username used to login. Defaults to 'root'.
 * `password`: Password used to login. Defaults to 'guest'.
