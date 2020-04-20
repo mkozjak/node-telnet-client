@@ -1,4 +1,4 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
+var telnet = process.env.NODETELNETCLIENT_COV
   ? require('../lib-cov/index')
   : require('../lib/index')
 var nodeunit = require('nodeunit')
@@ -18,7 +18,7 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
         c.write(new Buffer("[prompt2]", 'ascii'))
       })
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
@@ -36,7 +36,7 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
     var params = {
       host: '127.0.0.1',
       port: 2323,
-      shellPrompt: /(>|])/,
+      shellPrompt: /[[<]\w+[>\]]/,
       timeout: 1500
     }
 
@@ -48,7 +48,7 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
         test.done()
       })
     })
-    
+
     connection.connect(params)
   },
 })
