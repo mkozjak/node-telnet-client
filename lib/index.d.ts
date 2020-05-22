@@ -8,7 +8,7 @@ declare interface ConnectOptions {
     localAddress?: string;
     socketConnectOptions?: SocketConnectOpts;
     timeout?: number;
-    shellPrompt?: string;
+    shellPrompt?: string|RegExp;
     loginPrompt?: string|RegExp;
     passwordPrompt?: string|RegExp;
     failedLoginMatch?: string|RegExp;
