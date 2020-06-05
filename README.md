@@ -195,7 +195,7 @@ run()
 
 ## Problems?
 
-**Please do not directly email any Sidekiq committers with questions or problems.**  A community is best served when discussions are held in public.
+**Please do not directly email any node-telnet-client committers with questions or problems.**  A community is best served when discussions are held in public.
 
 If you have a problem, please search the [issues](https://github.com/mkozjak/node-telnet-client/issues) to see if where's existing reports to the issue you're facing and if there's any known solutions.
 
