@@ -197,7 +197,7 @@ run()
 
 **Please do not directly email any node-telnet-client committers with questions or problems.**  A community is best served when discussions are held in public.
 
-If you have a problem, please search the [issues](https://github.com/mkozjak/node-telnet-client/issues) to see if where's existing reports to the issue you're facing and if there's any known solutions.
+If you have a problem, please search the [issues](https://github.com/mkozjak/node-telnet-client/issues) to see if there's existing reports to the issue you're facing and if there's any known solutions.
 
 I also offer professional (paid) support and services, so make sure to [contact me](mailto:kozjakm1@gmail.com?subject=Professional%20Support) for more info.
 
