@@ -50,7 +50,7 @@ exports['streams'] = nodeunit.testCase({
       connection.shell(function(error, stream) {
         buffered = ''
 
-        expected = 'uptime\n23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\r\n/ # df\n/dev/disk1     112Gi   87Gi   25Gi    78% 1913034 4293054245    0%   /\r\n/ # '
+        expected = '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\r\n/ # /dev/disk1     112Gi   87Gi   25Gi    78% 1913034 4293054245    0%   /\r\n/ # '
 
         var cb = (data) => buffered += data.toString()
         stream.on('data', cb)
