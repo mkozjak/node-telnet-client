@@ -199,7 +199,7 @@ run()
 
 If you have a problem, please search the [issues](https://github.com/mkozjak/node-telnet-client/issues) to see if there's existing reports to the issue you're facing and if there's any known solutions.
 
-I also offer professional (paid) support and services, so make sure to [contact me](mailto:kozjakm1@gmail.com?subject=Professional%20Support) for more info.
+I also offer professional (paid) support and services, so make sure to [contact me](mailto:mario.kozjak@elpheria.com?subject=Professional%20Support) for more info.
 
 ## API
 
