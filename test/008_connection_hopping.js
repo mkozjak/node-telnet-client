@@ -1,10 +1,10 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
+const { Telnet } = process.env.NODETELNETCLIENT_COV
   ? require('../lib-cov/index')
-  : require('../lib/index')
-var nodeunit = require('nodeunit')
-var telnet_server = require('telnet')
+  : require('../dist/index')
+const nodeunit = require('nodeunit')
+const telnet_server = require('telnet')
 
-var srv
+let srv
 
 exports['connection_hopping'] = nodeunit.testCase({
   setUp: function(callback) {
@@ -18,7 +18,7 @@ exports['connection_hopping'] = nodeunit.testCase({
         c.write(new Buffer("/ # ", 'ascii'))
       })
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
@@ -31,10 +31,10 @@ exports['connection_hopping'] = nodeunit.testCase({
   },
 
   connection_hopping: function(test) {
-    var c1 = new telnet()
-    var c2 = new telnet()
+    var c1 = new Telnet()
+    var c2 = new Telnet()
 
-    var params = {
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       shellPrompt: '/ # ',
@@ -55,7 +55,7 @@ exports['connection_hopping'] = nodeunit.testCase({
         })
       })
     })
-    
+
     c1.connect(params)
   }
 })

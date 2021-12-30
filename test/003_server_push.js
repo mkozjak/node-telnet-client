@@ -1,10 +1,10 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-var nodeunit = require('nodeunit')
-var telnet_server = require('telnet')
+const { Telnet } = process.env.NODETELNETCLIENT_COV
+    ? require('../lib-cov/index')
+    : require('../dist/index');
+const nodeunit = require('nodeunit')
+const telnet_server = require('telnet')
 
-var srv
+let srv
 
 exports['server_push'] = nodeunit.testCase({
   setUp: function(callback) {
@@ -29,9 +29,8 @@ exports['server_push'] = nodeunit.testCase({
   },
 
   receive_pushed_data: function(test) {
-    var connection = new telnet()
-
-    var params = {
+    const connection = new Telnet()
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       shellPrompt: '/ # ',
@@ -39,12 +38,12 @@ exports['server_push'] = nodeunit.testCase({
     }
 
     connection.on('data', function(data) {
-      connection.end()
+      connection.end().finally()
 
       test.strictEqual(data.toString(), 'Hello, client!')
       test.done()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   }
 })

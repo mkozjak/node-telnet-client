@@ -1,5 +1,7 @@
 node_modules/
 lib-cov/
+dist/
 *.log
 *.swp
 *.swo
+.idea

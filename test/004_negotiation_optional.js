@@ -1,16 +1,16 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-var nodeunit = require('nodeunit')
-var telnet_server = require('telnet')
+const { Telnet } = process.env.NODETELNETCLIENT_COV
+    ? require('../lib-cov/index')
+    : require('../dist/index')
+const nodeunit = require('nodeunit')
+const telnet_server = require('telnet')
 
-var srv
+let srv
 
 exports['negotiation_optional'] = nodeunit.testCase({
   setUp: function(callback) {
     srv = telnet_server.createServer(function(c) {
       c.on('data', function() {
-        c.write(new Buffer("Hello, user.\n"))
+        c.write(Buffer.from("Hello, user.\n"))
       })
     })
 
@@ -26,11 +26,11 @@ exports['negotiation_optional'] = nodeunit.testCase({
   },
 
   send_data: function(test) {
-    var connection = new telnet()
-
-    var params = {
+    const connection = new Telnet()
+    const params = {
       host: '127.0.0.1',
       port: 2323,
+      timeout: 300000,
       negotiationMandatory: false
     }
 
@@ -39,19 +39,18 @@ exports['negotiation_optional'] = nodeunit.testCase({
         ors: '\r\n',
         waitfor: '\n'
       }, function(error, data) {
-        test.strictEqual(data.toString(), 'Hello, user.\r\n')
+        test.strictEqual(data?.toString(), 'Hello, user.\r\n')
         test.done()
-        connection.end()
-      })
+        connection.end().finally()
+      }).finally()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   },
 
   send_data_without_options: function(test) {
-    var connection = new telnet()
-
-    var params = {
+    const connection = new Telnet()
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       negotiationMandatory: false,
@@ -62,17 +61,16 @@ exports['negotiation_optional'] = nodeunit.testCase({
       connection.send('Hello, server.', function(error, data) {
         test.strictEqual(data.toString(), 'Hello, user.\r\n')
         test.done()
-        connection.end()
-      })
+        connection.end().finally()
+      }).finally()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   },
 
   send_data_without_options_promise: function(test) {
-    var connection = new telnet()
-
-    var params = {
+    const connection = new Telnet()
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       negotiationMandatory: false,
@@ -83,7 +81,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
       connection.send('Hello, server.').then(function(data) {
         test.strictEqual(data.toString(), 'Hello, user.\r\n')
         test.done()
-        connection.end()
+        connection.end().finally()
       })
     })
   }

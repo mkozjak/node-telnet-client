@@ -6,24 +6,35 @@
     "email": "kozjakm1@gmail.com"
   },
   "version": "1.4.11",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "engine": "node >= 6.9.1",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.4",
     "net": "^1.0.2",
     "stream": "^0.0.2"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.36",
+    "@types/node": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
     "coveralls": "^3.0.3",
+    "eslint": "^8.5.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-standard": "^5.0.0",
     "extend": "^3.0.2",
     "nodeunit": "^0.11.3",
-    "telnet": "0.0.1"
+    "telnet": "0.0.1",
+    "typescript": "^4.5.4"
   },
   "scripts": {
-    "test": "nodeunit test",
-    "coveralls": "jscoverage lib && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls"
+    "test": "tsc && nodeunit test/005*.js",
+    "coveralls": "tsc && jscoverage dist && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls"
   },
   "repository": {
     "type": "git",
@@ -74,6 +85,10 @@
     {
       "name": "Ivan Sieder",
       "email": "ivan@sieder.xyz"
+    },
+    {
+      "name": "Kerry Shetline",
+      "email": "kerry@shetline.com"
     }
   ],
   "funding": {

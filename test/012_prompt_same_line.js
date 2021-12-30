@@ -1,10 +1,10 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
+const { Telnet } = process.env.NODETELNETCLIENT_COV
   ? require('../lib-cov/index')
-  : require('../lib/index')
-var nodeunit = require('nodeunit')
-var telnet_server = require('telnet')
+  : require('../dist/index')
+const nodeunit = require('nodeunit')
+const telnet_server = require('telnet')
 
-var srv
+let srv
 
 exports['prompt_same_line'] = nodeunit.testCase({
   setUp: function(callback) {
@@ -26,7 +26,7 @@ exports['prompt_same_line'] = nodeunit.testCase({
         c.write(new Buffer("astparam g ch_select\r\n0002/ # ", 'ascii'))
       })
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
@@ -39,9 +39,9 @@ exports['prompt_same_line'] = nodeunit.testCase({
   },
 
   prompt_same_line: function(test) {
-    var connection = new telnet()
+    const connection = new Telnet()
 
-    var params = {
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       loginPrompt: 'KDS6-client001D56042A56 login: ',

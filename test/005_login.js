@@ -1,15 +1,15 @@
-var telnet = process.env.NODETELNETCLIENT_COV 
+const { Telnet } = process.env.NODETELNETCLIENT_COV
   ? require('../lib-cov/index')
-  : require('../lib/index')
-var nodeunit = require('nodeunit')
-var telnet_server = require('telnet')
+  : require('../dist/index')
+const nodeunit = require('nodeunit')
+const telnet_server = require('telnet')
 
-var srv
+let srv
 
 exports['login'] = nodeunit.testCase({
   setUp: function(callback) {
     srv = telnet_server.createServer(function(c) {
-      logged_in = false
+      let logged_in = false
 
       c.write(new Buffer("Enter your username:\n\nUserName:", 'ascii'))
 
@@ -26,7 +26,7 @@ exports['login'] = nodeunit.testCase({
         c.write(new Buffer("/ # ", 'ascii'))
       })
     })
-    
+
     srv.listen(2323, function() {
       callback()
     })
@@ -39,9 +39,8 @@ exports['login'] = nodeunit.testCase({
   },
 
   ok: function(test) {
-    var connection = new telnet()
-
-    var params = {
+    const connection = new Telnet()
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       loginPrompt: 'UserName:',
@@ -51,22 +50,21 @@ exports['login'] = nodeunit.testCase({
       timeout: 1500
     }
 
-    connection.on('ready', function(prompt) {
+    connection.on('ready', function() {
       connection.exec('uptime', function(err, resp) {
-        connection.end()
+        connection.end().finally()
 
         test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
         test.done()
-      })
+      }).finally()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   },
 
   fail: function(test) {
-    var connection = new telnet()
-
-    var params = {
+    const connection = new Telnet()
+    const params = {
       host: '127.0.0.1',
       port: 2323,
       loginPrompt: 'UserName:',
@@ -76,19 +74,19 @@ exports['login'] = nodeunit.testCase({
       timeout: 1500
     }
 
-    connection.on('ready', function(prompt) {
+    connection.on('ready', function() {
       connection.exec('uptime', function(err, resp) {
-        connection.end()
+        connection.end().finally()
 
         test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
         test.done()
-      })
+      }).finally()
     })
 
     connection.on('failedlogin', function() {
       test.done()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   }
 })
