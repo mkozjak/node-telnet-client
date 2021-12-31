@@ -11,12 +11,12 @@ export function asCallback<T>(promise: Promise<T>, callback?: Callback<T>): Prom
 }
 
 export function search(str: string, pattern: RegExp | string): number {
-  if (pattern instanceof RegExp)
-    return str.search(pattern);
-  else if (str)
-    return str.indexOf(pattern);
-  else
+  if (!str || !pattern)
     return -1;
+  else if (pattern instanceof RegExp)
+    return str.search(pattern);
+  else
+    return str.indexOf(pattern);
 }
 
 export class Stream extends Duplex {

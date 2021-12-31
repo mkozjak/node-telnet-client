@@ -188,6 +188,11 @@ export class Telnet extends events.EventEmitter {
         if (connectionPending)
           rejectIt(new Error('Socket closes'));
       });
+
+      this.once('failedlogin', () => {
+        if (connectionPending)
+          rejectIt(new Error('Failed login'));
+      });
     });
   }
 
@@ -224,11 +229,9 @@ export class Telnet extends events.EventEmitter {
             return reject(new Error('response not received'));
 
           resolve(this.inputBuffer);
-
-          /* reset stored response */
+          // reset stored response
           this.inputBuffer = '';
-
-          /* set state back to 'standby' for possible telnet server push data */
+          // set state back to 'standby' for possible telnet server push data
           this.state = 'standby';
         };
 
@@ -378,9 +381,8 @@ export class Telnet extends events.EventEmitter {
         this.state = 'login';
         this.login('password');
       }
-      else if (this.opts.failedLoginMatch !== undefined && search(stringData, this.opts.failedLoginMatch) >= 0) {
+      else if (search(stringData, this.opts.failedLoginMatch) >= 0) {
         this.state = 'failedlogin';
-
         this.emit('failedlogin', stringData);
         this.destroy().finally();
       }
@@ -391,7 +393,6 @@ export class Telnet extends events.EventEmitter {
         this.state = 'standby';
         this.inputBuffer = '';
         this.loginPromptReceived = false;
-
         this.emit('ready', shellPrompt);
         isReady?.push(true);
       }
@@ -400,18 +401,18 @@ export class Telnet extends events.EventEmitter {
       if (this.inputBuffer.length >= this.opts.maxBufferLength) {
         this.emit('bufferexceeded');
 
-        return null;
+        return Buffer.from(this.inputBuffer);
       }
 
       const stringData = chunk.toString();
-      const promptIndex = search(this.inputBuffer, this.opts.shellPrompt);
 
       this.inputBuffer += stringData;
 
-      if (promptIndex >= 0 && stringData.length >= 0) {
-        if (search(stringData, this.opts.pageSeparator) >= 0) {
+      const promptIndex = search(this.inputBuffer, this.opts.shellPrompt);
+
+      if (promptIndex < 0 && stringData.length > 0) {
+        if (search(stringData, this.opts.pageSeparator) >= 0)
           this.socket.write(Buffer.from('20', 'hex'));
-        }
 
         return null;
       }
@@ -419,7 +420,7 @@ export class Telnet extends events.EventEmitter {
       const response = this.inputBuffer.split(this.opts.irs);
 
       for (let i = response.length - 1; i >= 0; --i) {
-        if (search(response[i], this.opts.pageSeparator) !== -1) {
+        if (search(response[i], this.opts.pageSeparator) >= 0) {
           response[i] = response[i].replace(this.opts.pageSeparator, '');
 
           if (response[i].length === 0)
@@ -432,14 +433,15 @@ export class Telnet extends events.EventEmitter {
       else if (this.opts.echoLines < 0) response.splice(0, response.length - 2);
 
       /* remove prompt */
-      if (this.opts.stripShellPrompt) {
+      if (this.opts.stripShellPrompt && response.length > 0) {
         const idx = response.length - 1;
         response[idx] = search(response[idx], this.opts.shellPrompt) >= 0
           ? response[idx].replace(this.opts.shellPrompt, '')
           : '';
       }
-      this.response = response;
 
+      this.response = response;
+      chunk = null;
       this.emit('responseready');
     }
 

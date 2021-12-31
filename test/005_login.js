@@ -80,13 +80,13 @@ exports['login'] = nodeunit.testCase({
 
         test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
         test.done()
-      }).finally()
+      }).catch()
     })
 
     connection.on('failedlogin', function() {
       test.done()
     })
 
-    connection.connect(params).finally()
+    connection.connect(params).catch(() => {})
   }
 })
