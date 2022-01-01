@@ -11,19 +11,19 @@ exports['prompt_same_line'] = nodeunit.testCase({
     srv = telnet_server.createServer(function(c) {
       logged_in = false
 
-      c.write(new Buffer("KDS6-client001D56042A56 login: ", 'ascii'))
+      c.write(Buffer.from("KDS6-client001D56042A56 login: ", 'ascii'))
 
       c.on('data', function(data) {
         if (!logged_in) {
           if (data.toString().replace(/\n$/, '') !== 'root')
-            return c.write(new Buffer('Invalid username', 'ascii'))
+            return c.write(Buffer.from('Invalid username', 'ascii'))
           else {
             logged_in = true
-            return c.write(new Buffer('/ # ', 'ascii'))
+            return c.write(Buffer.from('/ # ', 'ascii'))
           }
         }
 
-        c.write(new Buffer("astparam g ch_select\r\n0002/ # ", 'ascii'))
+        c.write(Buffer.from("astparam g ch_select\r\n0002/ # ", 'ascii'))
       })
     })
 
@@ -38,9 +38,8 @@ exports['prompt_same_line'] = nodeunit.testCase({
     })
   },
 
-  prompt_same_line: function(test) {
+  'prompt_same_line': function(test) {
     const connection = new Telnet()
-
     const params = {
       host: '127.0.0.1',
       port: 2323,
@@ -51,15 +50,15 @@ exports['prompt_same_line'] = nodeunit.testCase({
       timeout: 1500
     }
 
-    connection.on('ready', function(prompt) {
+    connection.on('ready', function() {
       connection.exec('astparam g ch_select', function(err, resp) {
-        connection.end()
+        connection.end().finally()
 
         test.strictEqual(resp, '0002')
         test.done()
-      })
+      }).finally()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   }
 })

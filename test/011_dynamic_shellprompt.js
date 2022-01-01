@@ -9,13 +9,13 @@ let srv
 exports['dynamic_shellprompt'] = nodeunit.testCase({
   setUp: function(callback) {
     srv = telnet_server.createServer(function(c) {
-      c.write(new Buffer("BusyBox v1.19.2 () built-in shell (ash)\n"
+      c.write(Buffer.from("BusyBox v1.19.2 () built-in shell (ash)\n"
         + "Enter 'help' for a list of built-in commands.\n\n<prompt1>", 'ascii'))
 
       c.on('data', function() {
-        c.write(new Buffer("uptime\r\n23:14  up 1 day, 21:50, 6 users, "
+        c.write(Buffer.from("uptime\r\n23:14  up 1 day, 21:50, 6 users, "
           + "load averages: 1.41 1.43 1.41\r\n", 'ascii'))
-        c.write(new Buffer("[prompt2]", 'ascii'))
+        c.write(Buffer.from("[prompt2]", 'ascii'))
       })
     })
 
@@ -30,9 +30,8 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
     })
   },
 
-  dynamic_prompt_with_regex: function(test) {
+  'dynamic_prompt_with_regex': function(test) {
     const connection = new Telnet()
-
     const params = {
       host: '127.0.0.1',
       port: 2323,
@@ -40,15 +39,15 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
       timeout: 1500
     }
 
-    connection.on('ready', function(prompt) {
+    connection.on('ready', function() {
       connection.exec('uptime', function(err, resp) {
-        connection.end()
+        connection.end().finally()
 
         test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
         test.done()
-      })
+      }).finally()
     })
 
-    connection.connect(params)
+    connection.connect(params).finally()
   },
 })
