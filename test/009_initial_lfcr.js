@@ -36,7 +36,7 @@ exports['initial_lfcr'] = nodeunit.testCase({
     })
   },
 
-  initial_lfcr: function(test) {
+  'initial_lfcr': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

@@ -36,7 +36,7 @@ exports['streams'] = nodeunit.testCase({
     })
   },
 
-  shell: function(test) {
+  'shell': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

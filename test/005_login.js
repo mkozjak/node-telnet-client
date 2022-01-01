@@ -62,7 +62,7 @@ exports['login'] = nodeunit.testCase({
     connection.connect(params).finally()
   },
 
-  fail: function(test) {
+  'fail': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

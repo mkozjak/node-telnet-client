@@ -26,7 +26,7 @@ exports['generic'] = nodeunit.testCase({
     })
   },
 
-  connect: function(test) {
+  'connect': function(test) {
     connection.connect({
       host: '127.0.0.1',
       port: 2323 // not using 23, as that one could require sudo

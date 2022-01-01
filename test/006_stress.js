@@ -31,7 +31,7 @@ exports['stress'] = nodeunit.testCase({
     })
   },
 
-  buffer_exceeded: function(test) {
+  'buffer_exceeded': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

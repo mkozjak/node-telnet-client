@@ -28,7 +28,7 @@ exports['server_push'] = nodeunit.testCase({
     })
   },
 
-  receive_pushed_data: function(test) {
+  'receive_pushed_data': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

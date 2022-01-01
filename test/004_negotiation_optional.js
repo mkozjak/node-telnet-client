@@ -25,7 +25,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
     })
   },
 
-  send_data: function(test) {
+  'send_data': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -47,7 +47,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
     connection.connect(params).finally()
   },
 
-  send_data_without_options: function(test) {
+  'send_data_without_options': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -67,7 +67,7 @@ exports['negotiation_optional'] = nodeunit.testCase({
     connection.connect(params).finally()
   },
 
-  send_data_without_options_promise: function(test) {
+  'send_data_without_options_promise': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

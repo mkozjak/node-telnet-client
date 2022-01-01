@@ -30,7 +30,7 @@ exports['busybox'] = nodeunit.testCase({
     })
   },
 
-  exec_string_shell_prompt: function(test) {
+  'exec_string_shell_prompt': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -51,7 +51,7 @@ exports['busybox'] = nodeunit.testCase({
     connection.connect(params).finally()
   },
 
-  exec_regex_shell_prompt: function(test) {
+  'exec_regex_shell_prompt': function(test) {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',

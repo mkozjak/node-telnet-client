@@ -30,7 +30,7 @@ exports['connection_hopping'] = nodeunit.testCase({
     })
   },
 
-  connection_hopping: function(test) {
+  'connection_hopping': function(test) {
     const c1 = new Telnet()
     const c2 = new Telnet()
     const params = {
