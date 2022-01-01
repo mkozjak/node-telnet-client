@@ -1,15 +1,13 @@
-/* eslint-disable dot-notation */
-const { Telnet } = process.env.NODETELNETCLIENT_COV
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-const nodeunit = require('nodeunit')
-const telnet_server = require('telnet')
+import { expect } from 'chai'
+import { Telnet } from '../src'
+// @ts-ignore
+import telnet_server from 'telnet'
 
-let srv
+let server: any
 
-exports['initial_lfcr'] = nodeunit.testCase({
-  setUp: function (callback) {
-    srv = telnet_server.createServer(function (c) {
+describe('initial_lfcr', () => {
+  before((done) => {
+    server = telnet_server.createServer((c: any) => {
       let initialSent = false
 
       c.on('data', function () {
@@ -26,18 +24,12 @@ exports['initial_lfcr'] = nodeunit.testCase({
       })
     })
 
-    srv.listen(2323, function () {
-      callback()
-    })
-  },
+    server.listen(2323, done)
+  })
 
-  tearDown: function (callback) {
-    srv.close(function () {
-      callback()
-    })
-  },
+  after((done) => server.close(done))
 
-  initial_lfcr: function (test) {
+  it('initial_lfcr', (done) => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -51,11 +43,11 @@ exports['initial_lfcr'] = nodeunit.testCase({
       connection.exec('uptime', function (_err, resp) {
         connection.end().finally()
 
-        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
-        test.done()
+        expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
+        done()
       }).finally()
     })
 
     connection.connect(params).finally()
-  }
+  })
 })

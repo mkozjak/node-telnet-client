@@ -1,15 +1,13 @@
-/* eslint-disable dot-notation */
-const { Telnet } = process.env.NODETELNETCLIENT_COV
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-const nodeunit = require('nodeunit')
-const telnet_server = require('telnet')
+import { expect } from 'chai'
+import { Telnet } from '../src'
+// @ts-ignore
+import telnet_server from 'telnet'
 
-let srv
+let server: any
 
-exports['connection_hopping'] = nodeunit.testCase({
-  setUp: function (callback) {
-    srv = telnet_server.createServer(function (c) {
+describe('connection_hopping', () => {
+  before((done) => {
+    server = telnet_server.createServer((c: any) => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
 
@@ -20,18 +18,12 @@ exports['connection_hopping'] = nodeunit.testCase({
       })
     })
 
-    srv.listen(2323, function () {
-      callback()
-    })
-  },
+    server.listen(2323, done)
+  })
 
-  tearDown: function (callback) {
-    srv.close(function () {
-      callback()
-    })
-  },
+  after((done) => server.close(done))
 
-  connection_hopping: function (test) {
+  it('connection_hopping', (done) => {
     const c1 = new Telnet()
     const c2 = new Telnet()
     const params = {
@@ -50,12 +42,12 @@ exports['connection_hopping'] = nodeunit.testCase({
           c2.exec('uptime', function (_err, resp) {
             c2.end()
 
-            test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
-            test.done()
+            expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
+            done()
           })
         })
     })
 
     c1.connect(params).finally()
-  }
+  })
 })

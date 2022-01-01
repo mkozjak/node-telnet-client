@@ -1,23 +1,22 @@
-/* eslint-disable dot-notation */
-const { Telnet } = process.env.NODETELNETCLIENT_COV
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-const nodeunit = require('nodeunit')
-const telnet_server = require('telnet')
+import { expect } from 'chai'
+import { Telnet } from '../src'
+import { createServer, Server } from 'net'
 
-let srv
+let server: Server
 
-exports['login'] = nodeunit.testCase({
-  setUp: function (callback) {
-    srv = telnet_server.createServer(function (c) {
+describe('login', () => {
+  before((done) => {
+    server = createServer(function (c) {
       let logged_in = false
 
       c.write(Buffer.from('Enter your username:\n\nUserName:', 'ascii'))
 
-      c.on('data', function (data) {
+      c.on('data', (data) => {
         if (!logged_in) {
-          if (data.toString().replace(/\n$/, '') !== 'andy')
-            return c.write(Buffer.from('Invalid username', 'ascii'))
+          if (data.toString().replace(/\n$/, '') !== 'andy') {
+            c.write(Buffer.from('Invalid username', 'ascii'))
+            return
+          }
           else
             logged_in = true
         }
@@ -28,18 +27,12 @@ exports['login'] = nodeunit.testCase({
       })
     })
 
-    srv.listen(2323, function () {
-      callback()
-    })
-  },
+    server.listen(2323, done)
+  })
 
-  tearDown: function (callback) {
-    srv.close(function () {
-      callback()
-    })
-  },
+  after((done) => server.close(done))
 
-  ok: function (test) {
+  it('ok', (done) => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -55,15 +48,15 @@ exports['login'] = nodeunit.testCase({
       connection.exec('uptime', function (_err, resp) {
         connection.end().finally()
 
-        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
-        test.done()
+        expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
+        done()
       }).finally()
     })
 
     connection.connect(params).finally()
-  },
+  })
 
-  fail: function (test) {
+  it('fail', (done) => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -79,15 +72,12 @@ exports['login'] = nodeunit.testCase({
       connection.exec('uptime', function (_err, resp) {
         connection.end().finally()
 
-        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
-        test.done()
-      }).catch()
+        expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
+        done()
+      }).catch(() => {})
     })
 
-    connection.on('failedlogin', function () {
-      test.done()
-    })
-
+    connection.on('failedlogin', () => done())
     connection.connect(params).catch(() => {})
-  }
+  })
 })

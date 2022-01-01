@@ -1,16 +1,14 @@
-/* eslint-disable dot-notation */
-const { Telnet } = process.env.NODETELNETCLIENT_COV
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-const nodeunit = require('nodeunit')
-const telnet_server = require('telnet')
+import { expect } from 'chai'
+import { Telnet } from '../src'
+// @ts-ignore
+import telnet_server from 'telnet'
 
-let srv
-let interval = null
+let server: any
+let interval: any = null
 
-exports['stress'] = nodeunit.testCase({
-  setUp: function (callback) {
-    srv = telnet_server.createServer(function (c) {
+describe('stress', () => {
+  before((done) => {
+    server = telnet_server.createServer((c: any) => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
 
@@ -21,18 +19,12 @@ exports['stress'] = nodeunit.testCase({
       })
     })
 
-    srv.listen(2323, function () {
-      callback()
-    })
-  },
+    server.listen(2323, done)
+  })
 
-  tearDown: function (callback) {
-    srv.close(function () {
-      callback()
-    })
-  },
+  after((done) => server.close(done))
 
-  buffer_exceeded: function (test) {
+  it('buffer_exceeded', (done) => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -47,11 +39,11 @@ exports['stress'] = nodeunit.testCase({
         clearInterval(interval)
         connection.end().finally()
 
-        test.strictEqual(resp?.length ?? -1, 2100000)
-        test.done()
+        expect(resp?.length ?? -1).to.equal(2100000)
+        done()
       }).finally()
     })
 
     connection.connect(params).catch(() => {})
-  }
+  })
 })
