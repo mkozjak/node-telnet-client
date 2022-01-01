@@ -77,6 +77,7 @@ const defaultOptions: ConnectOptions = {
 
 Object.freeze(defaultOptions)
 
+// Convert various options which can be provided as strings into regexes.
 function stringToRegex(opts: any): void {
   ['failedLoginMatch', 'loginPrompt', 'passwordPrompt', 'shellPrompt', 'waitFor'].forEach(key => {
     const value = opts[key]
@@ -135,7 +136,7 @@ export class Telnet extends events.EventEmitter {
 
       this.socket.setTimeout(this.opts.timeout, () => {
         if (connectionPending) {
-          /* if cannot connect, emit error and destroy */
+          // If cannot connect, emit error and destroy.
           if (this.listeners('error').length > 0)
             this.emit('error', 'Cannot connect')
 
@@ -235,9 +236,9 @@ export class Telnet extends events.EventEmitter {
             return reject(new Error('response not received'))
 
           resolve(this.inputBuffer)
-          // reset stored response
+          // Reset stored response.
           this.inputBuffer = ''
-          // set state back to 'standby' for possible telnet server push data
+          // Set state back to 'standby' for possible telnet server push data.
           this.state = 'standby'
         }
 
@@ -250,9 +251,9 @@ export class Telnet extends events.EventEmitter {
           else
             reject(new Error('invalid response'))
 
-          /* reset stored response */
+          // Reset stored response.
           this.inputBuffer = ''
-          /* set state back to 'standby' for possible telnet server push data */
+          // Set state back to 'standby' for possible telnet server push data.
           this.state = 'standby'
           this.removeListener('bufferexceeded', buffExecHandler)
         }
@@ -387,7 +388,7 @@ export class Telnet extends events.EventEmitter {
       const promptIndex = search(stringData, this.opts.shellPrompt)
 
       if (search(stringData, this.opts.loginPrompt) >= 0) {
-        /* make sure we don't end up in an infinite loop */
+        // Make sure we don't end up in an infinite loop.
         if (!this.loginPromptReceived) {
           this.state = 'login'
           this.login('username')
@@ -449,7 +450,7 @@ export class Telnet extends events.EventEmitter {
       else if (this.opts.echoLines > 1) response.splice(0, this.opts.echoLines)
       else if (this.opts.echoLines < 0) response.splice(0, response.length - 2)
 
-      /* remove prompt */
+      // Remove prompt.
       if (this.opts.stripShellPrompt && response.length > 0) {
         const idx = response.length - 1
         response[idx] = search(response[idx], this.opts.shellPrompt) >= 0
@@ -474,6 +475,9 @@ export class Telnet extends events.EventEmitter {
   }
 
   negotiate(chunk: Buffer): Buffer {
+    /* info: http://tools.ietf.org/html/rfc1143#section-7
+     * Refuse to start performing and ack the start of performance
+     * DO -> WONT WILL -> DO */
     const packetLength = chunk.length
 
     let negData = chunk

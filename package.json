@@ -11,8 +11,9 @@
   "engine": "node >= 6.9.1",
   "license": "MIT",
   "scripts": {
+    "prepublishOnly": "tsc",
     "test": "nyc --reporter=html mocha --timeout 3000 --require ts-node/register test/**/*.ts",
-    "coveralls": "tsc && jscoverage lib && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls",
+    "coveralls": "tsc && nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint 'src/**/*.ts' 'test/**/*.ts'"
   },
   "dependencies": {

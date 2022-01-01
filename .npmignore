@@ -1,9 +1,11 @@
+/.github
 /.idea
+/.nyc_output
 /.vscode
 /coverage
-/.nyc_output
 /src
 /test
-.travis.yml
-.npmrc
 .eslintrc.json
+.npmrc
+.travis.yml
+tsconfig.json
