@@ -33,7 +33,7 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "test": "tsc && nodeunit test/006*.js",
+    "test": "tsc && nodeunit test/00*.js",
     "coveralls": "tsc && jscoverage dist && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls"
   },
   "repository": {

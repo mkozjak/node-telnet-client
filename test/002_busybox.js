@@ -36,7 +36,7 @@ exports['busybox'] = nodeunit.testCase({
       host: '127.0.0.1',
       port: 2323,
       shellPrompt: '/ # ',
-      timeout: 150000
+      timeout: 1500
     }
 
     connection.on('ready', function() {
@@ -57,7 +57,7 @@ exports['busybox'] = nodeunit.testCase({
       host: '127.0.0.1',
       port: 2323,
       shellPrompt: /\/ #(?: )?/,
-      timeout: 150000
+      timeout: 1500
     }
 
     connection.on('ready', function() {

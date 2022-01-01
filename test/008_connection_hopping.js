@@ -9,13 +9,13 @@ let srv
 exports['connection_hopping'] = nodeunit.testCase({
   setUp: function(callback) {
     srv = telnet_server.createServer(function(c) {
-      c.write(new Buffer("BusyBox v1.19.2 () built-in shell (ash)\n"
+      c.write(Buffer.from("BusyBox v1.19.2 () built-in shell (ash)\n"
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
 
       c.on('data', function() {
-        c.write(new Buffer("uptime\r\n23:14  up 1 day, 21:50, 6 users, "
+        c.write(Buffer.from("uptime\r\n23:14  up 1 day, 21:50, 6 users, "
           + "load averages: 1.41 1.43 1.41\r\n", 'ascii'))
-        c.write(new Buffer("/ # ", 'ascii'))
+        c.write(Buffer.from("/ # ", 'ascii'))
       })
     })
 
@@ -31,9 +31,8 @@ exports['connection_hopping'] = nodeunit.testCase({
   },
 
   connection_hopping: function(test) {
-    var c1 = new Telnet()
-    var c2 = new Telnet()
-
+    const c1 = new Telnet()
+    const c2 = new Telnet()
     const params = {
       host: '127.0.0.1',
       port: 2323,
@@ -41,12 +40,12 @@ exports['connection_hopping'] = nodeunit.testCase({
       timeout: 1500
     }
 
-    c1.on('ready', function(prompt) {
+    c1.on('ready', function() {
       c2.connect({
         sock: c1.getSocket(),
         shellPrompt: '/ # ',
       })
-      .then((ok) => {
+      .then(() => {
         c2.exec('uptime', function(err, resp) {
           c2.end()
 
@@ -56,6 +55,6 @@ exports['connection_hopping'] = nodeunit.testCase({
       })
     })
 
-    c1.connect(params)
+    c1.connect(params).finally()
   }
 })

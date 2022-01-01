@@ -104,6 +104,7 @@ export class Telnet extends events.EventEmitter {
 
       Object.assign(this.opts, opts ?? {});
       this.opts.initialCtrlC = opts.initialCTRLC && this.opts.initialCtrlC;
+      this.opts.extSock = opts?.sock ?? this.opts.extSock;
       stringToRegex(this.opts);
 
       // If socket is provided and in good state, just reuse it.
@@ -178,15 +179,23 @@ export class Telnet extends events.EventEmitter {
       this.socket.on('end', () => {
         this.emit('end');
 
-        if (connectionPending)
-          rejectIt(new Error('Socket ends'));
+        if (connectionPending) {
+          if (this.state === 'start')
+            resolveIt();
+          else
+            rejectIt(new Error('Socket ends'));
+        }
       });
 
       this.socket.on('close', () => {
         this.emit('close');
 
-        if (connectionPending)
-          rejectIt(new Error('Socket closes'));
+        if (connectionPending) {
+          if (this.state === 'start')
+            resolveIt();
+          else
+            rejectIt(new Error('Socket closes'));
+        }
       });
 
       this.once('failedlogin', () => {
@@ -347,7 +356,19 @@ export class Telnet extends events.EventEmitter {
 
   end(): Promise<void> {
     return new Promise(resolve => {
-      this.socket.end(() => resolve);
+      let timer = setTimeout(() => {
+        timer = undefined;
+        resolve();
+      }, 250);
+
+      this.socket.end(() => {
+        if (timer) {
+          console.log('end by callback');
+          clearTimeout(timer);
+          timer = undefined;
+          resolve();
+        }
+      });
     });
   }
 
