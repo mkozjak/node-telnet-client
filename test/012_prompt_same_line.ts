@@ -1,20 +1,18 @@
-/* eslint-disable dot-notation */
-const { Telnet } = process.env.NODETELNETCLIENT_COV
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-const nodeunit = require('nodeunit')
-const telnet_server = require('telnet')
+import { expect } from 'chai'
+import { Telnet } from '../src'
+// @ts-ignore
+import telnet_server from 'telnet'
 
-let srv
+let server: any
 
-exports['prompt_same_line'] = nodeunit.testCase({
-  setUp: function (callback) {
-    srv = telnet_server.createServer(function (c) {
+describe('prompt_same_line', () => {
+  before((done) => {
+    server = telnet_server.createServer((c: any) => {
       let logged_in = false
 
       c.write(Buffer.from('KDS6-client001D56042A56 login: ', 'ascii'))
 
-      c.on('data', function (data) {
+      c.on('data', function (data: any) {
         if (!logged_in) {
           if (data.toString().replace(/\n$/, '') !== 'root')
             return c.write(Buffer.from('Invalid username', 'ascii'))
@@ -28,18 +26,12 @@ exports['prompt_same_line'] = nodeunit.testCase({
       })
     })
 
-    srv.listen(2323, function () {
-      callback()
-    })
-  },
+    server.listen(2323, done)
+  })
 
-  tearDown: function (callback) {
-    srv.close(function () {
-      callback()
-    })
-  },
+  after((done) => server.close(done))
 
-  prompt_same_line: function (test) {
+  it('prompt_same_line', (done) => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -55,11 +47,11 @@ exports['prompt_same_line'] = nodeunit.testCase({
       connection.exec('astparam g ch_select', function (_err, resp) {
         connection.end().finally()
 
-        test.strictEqual(resp, '0002')
-        test.done()
+        expect(resp).to.equal('0002')
+        done()
       }).finally()
     })
 
     connection.connect(params).finally()
-  }
+  })
 })

@@ -1,15 +1,13 @@
-/* eslint-disable dot-notation */
-const { Telnet } = process.env.NODETELNETCLIENT_COV
-  ? require('../lib-cov/index')
-  : require('../lib/index')
-const nodeunit = require('nodeunit')
-const telnet_server = require('telnet')
+import { expect } from 'chai'
+import { Telnet } from '../src'
+// @ts-ignore
+import telnet_server from 'telnet'
 
-let srv
+let server: any
 
-exports['dynamic_shellprompt'] = nodeunit.testCase({
-  setUp: function (callback) {
-    srv = telnet_server.createServer(function (c) {
+describe('dynamic_shellprompt', () => {
+  before((done) => {
+    server = telnet_server.createServer((c: any) => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n<prompt1>", 'ascii'))
 
@@ -20,18 +18,12 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
       })
     })
 
-    srv.listen(2323, function () {
-      callback()
-    })
-  },
+    server.listen(2323, done)
+  })
 
-  tearDown: function (callback) {
-    srv.close(function () {
-      callback()
-    })
-  },
+  after((done) => server.close(done))
 
-  dynamic_prompt_with_regex: function (test) {
+  it('dynamic_prompt_with_regex', (done) => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -44,11 +36,11 @@ exports['dynamic_shellprompt'] = nodeunit.testCase({
       connection.exec('uptime', function (_err, resp) {
         connection.end().finally()
 
-        test.strictEqual(resp, '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
-        test.done()
+        expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
+        done()
       }).finally()
     })
 
     connection.connect(params).finally()
-  },
+  })
 })
