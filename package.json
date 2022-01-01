@@ -5,9 +5,9 @@
     "name": "Mario Kozjak",
     "email": "kozjakm1@gmail.com"
   },
-  "version": "1.4.11",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "version": "2.0.0-alpha.0",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "engine": "node >= 6.9.1",
   "license": "MIT",
   "dependencies": {
@@ -34,8 +34,8 @@
   },
   "scripts": {
     "test": "tsc && nodeunit test",
-    "coveralls": "tsc && jscoverage dist && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls",
-    "lint": "eslint 'lib/**/*.ts' 'test/**/*.js'"
+    "coveralls": "tsc && jscoverage lib && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls",
+    "lint": "eslint 'src/**/*.ts' 'test/**/*.js'"
   },
   "repository": {
     "type": "git",

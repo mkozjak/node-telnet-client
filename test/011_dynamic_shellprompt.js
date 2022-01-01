@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation */
 const { Telnet } = process.env.NODETELNETCLIENT_COV
   ? require('../lib-cov/index')
-  : require('../dist/index')
+  : require('../lib/index')
 const nodeunit = require('nodeunit')
 const telnet_server = require('telnet')
 

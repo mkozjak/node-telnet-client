@@ -1,6 +1,6 @@
 node_modules/
 lib-cov/
-dist/
+lib/
 *.log
 *.swp
 *.swo

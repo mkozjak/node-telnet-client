@@ -3,7 +3,7 @@
     "target": "ES2018",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "noImplicitAny": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
@@ -20,6 +20,8 @@
       "dom"
     ]
   },
-  "include": ["./lib/**/*"],
-  "exclude": ["node_modules", "dist", "test"]
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": ["node_modules", "lib", "test"]
 }
