@@ -1,0 +1,9 @@
+/.idea
+/.vscode
+/coverage
+/.nyc_output
+/src
+/test
+.travis.yml
+.npmrc
+.eslintrc.json

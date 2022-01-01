@@ -5,3 +5,5 @@ lib/
 *.swp
 *.swo
 .idea
+.nyc_output
+coverage/
