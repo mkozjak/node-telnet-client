@@ -14,10 +14,7 @@ describe('generic', () => {
     server.listen(2323, done)
   })
 
-  after(function (done) {
-    this.timeout(3000)
-    server.close(done)
-  })
+  after((done) => server.close(done))
 
   it('connect', (done) => {
     connection.connect({

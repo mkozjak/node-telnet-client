@@ -1,6 +1,3 @@
-// This is a stripped-down version of this project: https://github.com/mkozjak/node-telnet-client
-// ...with improved feature negotiation.
-
 import events from 'events'
 import { createConnection, Socket, SocketConnectOpts } from 'net'
 import { asCallback, Callback, search, Stream } from './utils'
@@ -363,7 +360,6 @@ export class Telnet extends events.EventEmitter {
 
       this.socket.end(() => {
         if (timer) {
-          console.log('end by callback')
           clearTimeout(timer)
           timer = undefined
           resolve()
