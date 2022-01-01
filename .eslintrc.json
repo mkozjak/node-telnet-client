@@ -21,7 +21,7 @@
     "@typescript-eslint",
     "chai-friendly"
   ],
-  "ignorePatterns": ["dist/**/*", "*.js"],
+  "ignorePatterns": ["dist/**/*"],
   "rules": {
     "brace-style": [
       "error",
