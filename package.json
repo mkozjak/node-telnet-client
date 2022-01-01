@@ -34,7 +34,8 @@
   },
   "scripts": {
     "test": "tsc && nodeunit test",
-    "coveralls": "tsc && jscoverage dist && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls"
+    "coveralls": "tsc && jscoverage dist && NODETELNETCLIENT_COV=1 nodeunit --reporter=lcov test | coveralls",
+    "lint": "eslint 'lib/**/*.ts'"
   },
   "repository": {
     "type": "git",
