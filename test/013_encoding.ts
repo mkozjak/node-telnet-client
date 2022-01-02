@@ -6,7 +6,7 @@ import telnet_server from 'telnet'
 let server: any
 
 describe('encoding', () => {
-  before((done) => {
+  before(done => {
     server = telnet_server.createServer((c: any) => {
       c.on('data', () => {
         c.write(Buffer.from('Fahrvergnügen\r\n', 'utf8'))
@@ -16,9 +16,9 @@ describe('encoding', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('utf8', (done) => {
+  it('utf8', done => {
     const connection = new Telnet()
     const params: ConnectOptions = {
       host: '127.0.0.1',
@@ -29,7 +29,7 @@ describe('encoding', () => {
     }
 
     connection.connect(params).then(() => {
-      connection.send('foo', function (_err, resp) {
+      connection.send('foo', (_err, resp) => {
         connection.end().finally()
 
         expect(resp).to.equal('Fahrvergnügen\r\n')
@@ -38,7 +38,7 @@ describe('encoding', () => {
     })
   })
 
-  it('latin1', (done) => {
+  it('latin1', done => {
     const connection = new Telnet()
     const params: ConnectOptions = {
       host: '127.0.0.1',
@@ -50,7 +50,7 @@ describe('encoding', () => {
     }
 
     connection.connect(params).then(() => {
-      connection.send('foo', function (_err, resp) {
+      connection.send('foo', (_err, resp) => {
         connection.end().finally()
 
         expect(resp).to.equal('Fahrvergn\u00C3\u00BCgen\n')

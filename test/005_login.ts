@@ -5,13 +5,13 @@ import { createServer, Server, Socket } from 'net'
 let server: Server
 
 describe('login', () => {
-  before((done) => {
+  before(done => {
     server = createServer((c: Socket) => {
       let logged_in = false
 
       c.write(Buffer.from('Enter your username:\n\nUserName:', 'ascii'))
 
-      c.on('data', (data) => {
+      c.on('data', data => {
         if (!logged_in) {
           if (data.toString().replace(/\n$/, '') !== 'andy') {
             c.write(Buffer.from('Invalid username', 'ascii'))
@@ -30,9 +30,9 @@ describe('login', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('ok', (done) => {
+  it('ok', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -44,8 +44,8 @@ describe('login', () => {
       timeout: 1500
     }
 
-    connection.on('ready', function () {
-      connection.exec('uptime', function (_err, resp) {
+    connection.on('ready', () => {
+      connection.exec('uptime', (_err, resp) => {
         connection.end().finally()
 
         expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')
@@ -56,7 +56,7 @@ describe('login', () => {
     connection.connect(params).finally()
   })
 
-  it('fail', (done) => {
+  it('fail', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -68,8 +68,8 @@ describe('login', () => {
       timeout: 1500
     }
 
-    connection.on('ready', function () {
-      connection.exec('uptime', function (_err, resp) {
+    connection.on('ready', () => {
+      connection.exec('uptime', (_err, resp) => {
         connection.end().finally()
 
         expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')

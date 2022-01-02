@@ -7,16 +7,16 @@ let server: Server
 let callbackCount: number
 
 describe('generic', () => {
-  before((done) => {
+  before(done => {
     connection = new Telnet()
     callbackCount = 0
     server = createServer(() => callbackCount++)
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('connect', (done) => {
+  it('connect', done => {
     connection.connect({
       host: '127.0.0.1',
       port: 2323 // not using 23, as that one could require sudo

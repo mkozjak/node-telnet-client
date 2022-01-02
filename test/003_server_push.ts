@@ -5,7 +5,7 @@ import { createServer, Server, Socket } from 'net'
 let server: Server
 
 describe('server_push', () => {
-  before((done) => {
+  before(done => {
     server = createServer((c: Socket) => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
@@ -18,9 +18,9 @@ describe('server_push', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('receive_pushed_data', (done) => {
+  it('receive_pushed_data', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -30,7 +30,7 @@ describe('server_push', () => {
       newlineReplace: '\n'
     }
 
-    connection.on('data', function (data) {
+    connection.on('data', data => {
       connection.end().finally()
 
       expect(data.toString()).to.equal('Hello,\nclient!')

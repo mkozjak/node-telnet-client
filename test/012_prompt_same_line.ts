@@ -6,7 +6,7 @@ import telnet_server from 'telnet'
 let server: any
 
 describe('prompt_same_line', () => {
-  before((done) => {
+  before(done => {
     server = telnet_server.createServer((c: any) => {
       let logged_in = false
 
@@ -29,9 +29,9 @@ describe('prompt_same_line', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('prompt_same_line', (done) => {
+  it('prompt_same_line', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -43,8 +43,8 @@ describe('prompt_same_line', () => {
       timeout: 1500
     }
 
-    connection.on('ready', function () {
-      connection.exec('astparam g ch_select', function (_err, resp) {
+    connection.on('ready', () => {
+      connection.exec('astparam g ch_select', (_err, resp) => {
         connection.end().finally()
 
         expect(resp).to.equal('0002')

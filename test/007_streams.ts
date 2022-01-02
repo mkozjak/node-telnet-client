@@ -6,7 +6,7 @@ import telnet_server from 'telnet'
 let server: any
 
 describe('streams', () => {
-  before((done) => {
+  before(done => {
     server = telnet_server.createServer((c: any) => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
@@ -27,9 +27,9 @@ describe('streams', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('shell', (done) => {
+  it('shell', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -38,8 +38,8 @@ describe('streams', () => {
       timeout: 1500
     }
 
-    connection.on('ready', function () {
-      connection.shell(function (error, stream) {
+    connection.on('ready', () => {
+      connection.shell((error, stream) => {
         let buffered = ''
         const expected = '23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\r\n/ # /dev/disk1     112Gi   87Gi   25Gi    78% 1913034 4293054245    0%   /\r\n/ # '
         const cb = (data: any): string => buffered += data.toString()

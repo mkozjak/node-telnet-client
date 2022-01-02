@@ -6,7 +6,7 @@ import telnet_server from 'telnet'
 let server: any
 
 describe('initial_lfcr_before_login', () => {
-  before((done) => {
+  before(done => {
     server = telnet_server.createServer((c: any) => {
       let state = 'init'
       let usernameOk = false
@@ -22,18 +22,11 @@ describe('initial_lfcr_before_login', () => {
 
         if (!usernameOk) {
           if (state === 'init')
-            return c.write(Buffer.from('Username: ', 'ascii'),
-              function () {
-                state = 'username'
-              })
+            return c.write(Buffer.from('Username: ', 'ascii'), () => state = 'username')
 
           if (state === 'username' && data.toString().trim() === 'foo') {
             usernameOk = true
-
-            return c.write(Buffer.from('Password: ', 'ascii'),
-              function () {
-                state = 'password'
-              })
+            return c.write(Buffer.from('Password: ', 'ascii'), () => state = 'password')
           }
         }
 
@@ -49,9 +42,9 @@ describe('initial_lfcr_before_login', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('initial_lfcr_before_login', (done) => {
+  it('initial_lfcr_before_login', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -65,8 +58,8 @@ describe('initial_lfcr_before_login', () => {
       timeout: 1500
     }
 
-    connection.on('ready', function () {
-      connection.exec('uptime', function (_err, resp) {
+    connection.on('ready', () => {
+      connection.exec('uptime', (_err, resp) => {
         connection.end().finally()
 
         expect(resp).to.equal('23:14  up 1 day, 21:50, 6 users, load averages: 1.41 1.43 1.41\n')

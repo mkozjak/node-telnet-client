@@ -13,7 +13,7 @@
   "scripts": {
     "prepack": "tsc",
     "test": "nyc --reporter=html mocha --timeout 3000 --require ts-node/register test/**/*.ts",
-    "coveralls": "tsc && nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "tsc && (nyc report --reporter=text-lcov | coveralls)",
     "lint": "eslint 'src/**/*.ts' 'test/**/*.ts'"
   },
   "dependencies": {

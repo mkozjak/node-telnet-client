@@ -22,7 +22,7 @@ export function search(str: string, pattern: RegExp | string): number {
 export class Stream extends Duplex {
   constructor(private source: Socket, options?: DuplexOptions) {
     super(options)
-    this.source.on('data', (data) => this.push(data))
+    this.source.on('data', data => this.push(data))
   }
 
   _write(data: Buffer | string, encoding?: BufferEncoding, callback?: Callback<void>): void {

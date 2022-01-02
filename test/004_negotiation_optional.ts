@@ -5,7 +5,7 @@ import { createServer, Server, Socket } from 'net'
 let server: Server
 
 describe('negotiation_optional', () => {
-  before((done) => {
+  before(done => {
     server = createServer((c: Socket) => {
       c.on('data', () => {
         c.write(Buffer.from('Hello, user.\n'))
@@ -15,9 +15,9 @@ describe('negotiation_optional', () => {
     server.listen(2323, done)
   })
 
-  after((done) => server.close(done))
+  after(done => server.close(done))
 
-  it('send_data', (done) => {
+  it('send_data', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -25,11 +25,11 @@ describe('negotiation_optional', () => {
       negotiationMandatory: false
     }
 
-    connection.on('connect', function () {
+    connection.on('connect', () => {
       connection.send('Hello, server.', {
         ors: '\r\n',
         waitFor: '\n'
-      }, function (_error, data) {
+      }, (_error, data) => {
         expect(data?.toString()).to.equal('Hello, user.\n')
         connection.end().finally()
         done()
@@ -39,7 +39,7 @@ describe('negotiation_optional', () => {
     connection.connect(params).finally()
   })
 
-  it('send_data_without_options', (done) => {
+  it('send_data_without_options', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -48,8 +48,8 @@ describe('negotiation_optional', () => {
       sendTimeout: 100
     }
 
-    connection.on('connect', function () {
-      connection.send('Hello, server.', function (_error, data) {
+    connection.on('connect', () => {
+      connection.send('Hello, server.', (_error, data) => {
         expect(data?.toString()).to.equal('Hello, user.\n')
         connection.end().finally()
         done()
@@ -59,7 +59,7 @@ describe('negotiation_optional', () => {
     connection.connect(params).finally()
   })
 
-  it('send_data_without_options_promise', (done) => {
+  it('send_data_without_options_promise', done => {
     const connection = new Telnet()
     const params = {
       host: '127.0.0.1',
@@ -68,8 +68,8 @@ describe('negotiation_optional', () => {
       sendTimeout: 100
     }
 
-    connection.connect(params).then(function () {
-      connection.send('Hello, server.').then(function (data) {
+    connection.connect(params).then(() => {
+      connection.send('Hello, server.').then(data => {
         expect(data?.toString()).to.equal('Hello, user.\n')
         connection.end().finally()
         done()

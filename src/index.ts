@@ -107,12 +107,47 @@ function stringToRegex(opts: any): void {
 }
 
 export class Telnet extends events.EventEmitter {
+  private dataResolver: any
   private inputBuffer: string = ''
   private loginPromptReceived = false
   private opts = Object.assign({}, defaultOptions)
+  private pendingData: (string | null)[] = []
   private response: string[] = undefined
   private socket: Socket
   private state: TelnetState = null
+
+  constructor() {
+    super()
+
+    this.on('data', data => this.pushNextData(data))
+    this.on('end', () => this.pushNextData(null))
+  }
+
+  private pushNextData(data: any): void {
+    if (data instanceof Buffer)
+      data = data.toString(this.opts.encoding)
+    else if (data != null)
+      data = data.toString()
+
+    const chunks = data ? data.split(/(?<=\r\r\n|\r?\n)/) : [data]
+
+    if (this.dataResolver) {
+      this.dataResolver(chunks[0])
+      this.dataResolver = undefined
+    }
+    else
+      this.pendingData.push(chunks[0])
+
+    if (chunks.length > 1)
+      this.pendingData.push(...chunks.slice(1))
+  }
+
+  async nextData(): Promise<string | null> {
+    if (this.pendingData.length > 0)
+      return this.pendingData.splice(0, 1)[0]
+
+    return new Promise<string>(resolve => this.dataResolver = resolve)
+  }
 
   connect(opts: any): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -152,7 +187,7 @@ export class Telnet extends events.EventEmitter {
         })
       }
 
-      this.socket.setMaxListeners(20)
+      this.socket.setMaxListeners(Math.max(15, this.socket.getMaxListeners()))
 
       this.socket.setTimeout(this.opts.timeout, () => {
         if (connectionPending) {
@@ -383,6 +418,7 @@ export class Telnet extends events.EventEmitter {
     return new Promise(resolve => {
       let timer = setTimeout(() => {
         timer = undefined
+        this.emit('end')
         resolve()
       }, this.opts.maxEndWait)
 
