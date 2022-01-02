@@ -108,6 +108,7 @@ function stringToRegex(opts: any): void {
 
 export class Telnet extends events.EventEmitter {
   private dataResolver: any
+  private endEmitted = false
   private inputBuffer: string = ''
   private loginPromptReceived = false
   private opts = Object.assign({}, defaultOptions)
@@ -237,7 +238,10 @@ export class Telnet extends events.EventEmitter {
       })
 
       this.socket.on('end', () => {
-        this.emit('end')
+        if (!this.endEmitted) {
+          this.endEmitted = true
+          this.emit('end')
+        }
 
         if (connectionPending) {
           if (this.state === 'start')
@@ -418,7 +422,12 @@ export class Telnet extends events.EventEmitter {
     return new Promise(resolve => {
       let timer = setTimeout(() => {
         timer = undefined
-        this.emit('end')
+
+        if (!this.endEmitted) {
+          this.endEmitted = true
+          this.emit('end')
+        }
+
         resolve()
       }, this.opts.maxEndWait)
 
