@@ -1,12 +1,12 @@
 import { expect } from 'chai'
 import { Telnet } from '../src'
-import { createServer, Server } from 'net'
+import { createServer, Server, Socket } from 'net'
 
 let server: Server
 
 describe('login', () => {
   before((done) => {
-    server = createServer(function (c) {
+    server = createServer((c: Socket) => {
       let logged_in = false
 
       c.write(Buffer.from('Enter your username:\n\nUserName:', 'ascii'))

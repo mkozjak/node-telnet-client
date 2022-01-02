@@ -1,17 +1,17 @@
 import { expect } from 'chai'
 import { Telnet } from '../src'
-import { createServer, Server } from 'net'
+import { createServer, Server, Socket } from 'net'
 
 let server: Server
 
 describe('server_push', () => {
   before((done) => {
-    server = createServer(function (c) {
+    server = createServer((c: Socket) => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
 
-      setTimeout(function () {
-        c.write(Buffer.from('Hello, client!', 'ascii'))
+      setTimeout(() => {
+        c.write(Buffer.from('Hello,\r\nclient!', 'ascii'))
       }, 50)
     })
 
@@ -26,13 +26,14 @@ describe('server_push', () => {
       host: '127.0.0.1',
       port: 2323,
       shellPrompt: '/ # ',
-      timeout: 1500
+      timeout: 1500,
+      newlineReplace: '\n'
     }
 
     connection.on('data', function (data) {
       connection.end().finally()
 
-      expect(data.toString()).to.equal('Hello, client!')
+      expect(data.toString()).to.equal('Hello,\nclient!')
       done()
     })
 

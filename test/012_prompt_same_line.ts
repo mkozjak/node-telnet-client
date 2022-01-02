@@ -12,7 +12,7 @@ describe('prompt_same_line', () => {
 
       c.write(Buffer.from('KDS6-client001D56042A56 login: ', 'ascii'))
 
-      c.on('data', function (data: any) {
+      c.on('data', (data: any) => {
         if (!logged_in) {
           if (data.toString().replace(/\n$/, '') !== 'root')
             return c.write(Buffer.from('Invalid username', 'ascii'))

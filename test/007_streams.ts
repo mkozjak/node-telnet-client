@@ -11,7 +11,7 @@ describe('streams', () => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
 
-      c.on('data', function (data: any) {
+      c.on('data', (data: any) => {
         if (data.toString().indexOf('uptime\n') !== -1) {
           c.write(Buffer.from('23:14  up 1 day, 21:50, 6 users, '
             + 'load averages: 1.41 1.43 1.41\r\n', 'ascii'))

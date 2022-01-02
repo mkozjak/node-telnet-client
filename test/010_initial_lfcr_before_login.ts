@@ -12,7 +12,7 @@ describe('initial_lfcr_before_login', () => {
       let usernameOk = false
       let passwordOk = false
 
-      c.on('data', function (data: any) {
+      c.on('data', (data: any) => {
         if (passwordOk) {
           c.write(Buffer.from('uptime\r\n23:14  up 1 day, 21:50, 6 users, '
             + 'load averages: 1.41 1.43 1.41\r\n', 'ascii'))

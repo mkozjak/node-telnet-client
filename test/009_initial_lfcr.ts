@@ -10,7 +10,7 @@ describe('initial_lfcr', () => {
     server = telnet_server.createServer((c: any) => {
       let initialSent = false
 
-      c.on('data', function () {
+      c.on('data', () => {
         if (!initialSent)
           return c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
             + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'),

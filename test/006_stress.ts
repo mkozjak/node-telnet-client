@@ -12,7 +12,7 @@ describe('stress', () => {
       c.write(Buffer.from('BusyBox v1.19.2 () built-in shell (ash)\n'
         + "Enter 'help' for a list of built-in commands.\n\n/ # ", 'ascii'))
 
-      c.on('data', function () {
+      c.on('data', () => {
         interval = setInterval(function () {
           c.write(Buffer.alloc(100000, '23r23g32g2g3g'))
         }, 1)
@@ -31,7 +31,8 @@ describe('stress', () => {
       port: 2323,
       shellPrompt: '/ # ',
       timeout: 1500,
-      maxBufferLength: 2 * 1024 * 1024
+      maxBufferLength: 2 * 1024 * 1024,
+      maxEndWait: 300
     }
 
     connection.on('ready', function () {

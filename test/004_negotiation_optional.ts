@@ -1,13 +1,13 @@
 import { expect } from 'chai'
 import { Telnet } from '../src'
-import { createServer, Server } from 'net'
+import { createServer, Server, Socket } from 'net'
 
 let server: Server
 
 describe('negotiation_optional', () => {
   before((done) => {
-    server = createServer(function (c) {
-      c.on('data', function () {
+    server = createServer((c: Socket) => {
+      c.on('data', () => {
         c.write(Buffer.from('Hello, user.\n'))
       })
     })

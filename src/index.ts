@@ -11,6 +11,7 @@ interface ExecOptions {
   irs?: string;
   loginPrompt?: string;
   maxBufferLength?: number;
+  newlineReplace?: string;
   ors?: string;
   shellPrompt?: string;
   timeout?: number;
@@ -18,6 +19,7 @@ interface ExecOptions {
 
 export interface SendOptions {
   maxBufferLength?: number;
+  newlineReplace?: string;
   ors?: string;
   timeout?: number;
   waitFor?: string | RegExp | false;
@@ -27,6 +29,7 @@ export interface SendOptions {
 export interface ConnectOptions extends SendOptions {
   debug?: boolean;
   echoLines?: number;
+  encoding?: BufferEncoding;
   execTimeout?: number;
   extSock?: any;
   failedLoginMatch?: string | RegExp;
@@ -37,6 +40,7 @@ export interface ConnectOptions extends SendOptions {
   irs?: string;
   localAddress?: string;
   loginPrompt?: string | RegExp;
+  maxEndWait?: number,
   negotiationMandatory?: boolean;
   pageSeparator?: string | RegExp;
   password?: string;
@@ -53,6 +57,7 @@ export interface ConnectOptions extends SendOptions {
 const defaultOptions: ConnectOptions = {
   debug: false,
   echoLines: 1,
+  encoding: 'latin1',
   execTimeout: 2000,
   host: '127.0.0.1',
   initialCtrlC: false,
@@ -61,6 +66,7 @@ const defaultOptions: ConnectOptions = {
   localAddress: '',
   loginPrompt: /login[: ]*$/i,
   maxBufferLength: 1048576,
+  maxEndWait: 250,
   negotiationMandatory: true,
   ors: '\n',
   pageSeparator: '---- More',
@@ -107,7 +113,7 @@ export class Telnet extends events.EventEmitter {
 
       // If socket is provided and in good state, just reuse it.
       if (this.opts.extSock) {
-        if (!this.checkSocket(this.opts.extSock))
+        if (!Telnet.checkSocket(this.opts.extSock))
           return rejectIt(new Error('socket invalid'))
 
         this.socket = this.opts.extSock
@@ -148,11 +154,16 @@ export class Telnet extends events.EventEmitter {
         return reject(new Error('timeout'))
       })
 
+      this.socket.on('connect', () => {
+        if (!this.opts.shellPrompt)
+          resolveIt()
+      })
+
       this.socket.on('data', data => {
         let emitted = false
 
         if (this.state === 'standby' || !this.opts.negotiationMandatory) {
-          this.emit('data', data)
+          this.emit('data', this.opts.newlineReplace ? Buffer.from(this.decode(data), this.opts.encoding) : data)
           emitted = true
         }
 
@@ -247,7 +258,7 @@ export class Telnet extends events.EventEmitter {
             clearTimeout(execTimeout)
 
           if (this.response)
-            resolve(this.response.join('\n'))
+            resolve(this.response.join(this.opts.newlineReplace || '\n'))
           else
             reject(new Error('invalid response'))
 
@@ -302,7 +313,7 @@ export class Telnet extends events.EventEmitter {
         let response = ''
         let sendTimer: any
         const sendHandler = (data: Buffer): void => {
-          response += data.toString()
+          response += this.decode(data)
 
           if (sendTimer)
             clearTimeout(sendTimer)
@@ -357,7 +368,7 @@ export class Telnet extends events.EventEmitter {
       let timer = setTimeout(() => {
         timer = undefined
         resolve()
-      }, 250)
+      }, this.opts.maxEndWait)
 
       this.socket.end(() => {
         if (timer) {
@@ -384,7 +395,7 @@ export class Telnet extends events.EventEmitter {
       this.state = 'getprompt'
 
     if (this.state === 'getprompt') {
-      const stringData = chunk.toString()
+      const stringData = this.decode(chunk)
       const promptIndex = search(stringData, this.opts.shellPrompt)
 
       if (search(stringData, this.opts.loginPrompt) >= 0) {
@@ -419,10 +430,10 @@ export class Telnet extends events.EventEmitter {
       if (this.inputBuffer.length >= this.opts.maxBufferLength) {
         this.emit('bufferexceeded')
 
-        return Buffer.from(this.inputBuffer)
+        return Buffer.from(this.inputBuffer, this.opts.encoding)
       }
 
-      const stringData = chunk.toString()
+      const stringData = this.decode(chunk)
 
       this.inputBuffer += stringData
 
@@ -514,7 +525,7 @@ export class Telnet extends events.EventEmitter {
     return cmdData
   }
 
-  checkSocket(sock: any): boolean {
+  private static checkSocket(sock: any): boolean {
     return sock !== null &&
       typeof sock === 'object' &&
       typeof sock.pipe === 'function' &&
@@ -524,5 +535,15 @@ export class Telnet extends events.EventEmitter {
       sock.readable !== false &&
       typeof sock._read === 'function' &&
       typeof sock._readableState === 'object'
+  }
+
+  private decode(chunk: string | Buffer): string {
+    if (chunk instanceof Buffer)
+      chunk = chunk.toString(this.opts.encoding)
+
+    if (this.opts.newlineReplace)
+      chunk = chunk.replace(/\r\r\n|\r\n?/g, this.opts.newlineReplace)
+
+    return chunk
   }
 }
