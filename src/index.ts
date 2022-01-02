@@ -4,7 +4,9 @@ import { asCallback, Callback, search, Stream } from './utils'
 
 export type TelnetState = null | 'failedlogin' | 'getprompt' | 'login' | 'ready' | 'response' | 'standby' | 'start';
 
-interface ExecOptions {
+export type EscapeHandler = (escapeSequence: string) => string | null
+
+export interface ExecOptions {
   echoLines?: number;
   execTimeout?: number;
   failedLoginMatch?: string;
@@ -14,6 +16,7 @@ interface ExecOptions {
   newlineReplace?: string;
   ors?: string;
   shellPrompt?: string;
+  stripControls?: boolean;
   timeout?: number;
 }
 
@@ -21,8 +24,12 @@ export interface SendOptions {
   maxBufferLength?: number;
   newlineReplace?: string;
   ors?: string;
+  stripControls?: boolean;
   timeout?: number;
   waitFor?: string | RegExp | false;
+  /**
+   * @deprecated
+   */
   waitfor?: string | RegExp | false;
 }
 
@@ -30,10 +37,14 @@ export interface ConnectOptions extends SendOptions {
   debug?: boolean;
   echoLines?: number;
   encoding?: BufferEncoding;
+  escapeHandler?: EscapeHandler;
   execTimeout?: number;
   extSock?: any;
   failedLoginMatch?: string | RegExp;
   host?: string;
+  /**
+   * @deprecated
+   */
   initialCTRLC?: boolean;
   initialCtrlC?: boolean;
   initialLFCR?: boolean;
@@ -51,13 +62,15 @@ export interface ConnectOptions extends SendOptions {
   sock?: Socket;
   socketConnectOptions?: SocketConnectOpts;
   stripShellPrompt?: boolean;
+  terminalHeight?: number;
+  terminalWidth?: number;
   username?: string;
 }
 
 const defaultOptions: ConnectOptions = {
   debug: false,
   echoLines: 1,
-  encoding: 'latin1',
+  encoding: 'ascii',
   execTimeout: 2000,
   host: '127.0.0.1',
   initialCtrlC: false,
@@ -75,6 +88,7 @@ const defaultOptions: ConnectOptions = {
   port: 23,
   sendTimeout: 2000,
   shellPrompt: /(?:\/ )?#\s/,
+  stripControls: false,
   stripShellPrompt: true,
   timeout: 2000,
   username: 'root',
@@ -155,8 +169,10 @@ export class Telnet extends events.EventEmitter {
       })
 
       this.socket.on('connect', () => {
-        if (!this.opts.shellPrompt)
+        if (!this.opts.shellPrompt) {
+          this.state = 'standby'
           resolveIt()
+        }
       })
 
       this.socket.on('data', data => {
@@ -506,18 +522,26 @@ export class Telnet extends events.EventEmitter {
     const defaultResponse = negData.toString('hex').replace(/fd/g, 'fc').replace(/fb/g, 'fd')
     let negResp = ''
 
-    for (let i = 0; i < chunkHex.length; i += 6) {
-      switch (chunkHex.substr(i + 2, 4)) {
-        case 'fd18':
-          negResp += 'fffb18'
-          break
-        case 'fd1f':
-          negResp += 'fffb1ffffa1f270f270ffff0'
-          break
-        default:
-          negResp += defaultResponse.substr(i, 6)
+    if (this.opts.terminalHeight && this.opts.terminalWidth) {
+      for (let i = 0; i < chunkHex.length; i += 6) {
+        let w, h: string
+
+        switch (chunkHex.substr(i + 2, 4)) {
+          case 'fd18':
+            negResp += 'fffb18'
+            break
+          case 'fd1f':
+            w = this.opts.terminalWidth.toString(16).padStart(4, '0')
+            h = this.opts.terminalHeight.toString(16).padStart(4, '0')
+            negResp += `fffb1ffffa1f${w}${h}fff0`
+            break
+          default:
+            negResp += defaultResponse.substr(i, 6)
+        }
       }
     }
+    else
+      negResp = defaultResponse
 
     if (this.socket.writable)
       this.socket.write(Buffer.from(negResp, 'hex'))
@@ -541,8 +565,24 @@ export class Telnet extends events.EventEmitter {
     if (chunk instanceof Buffer)
       chunk = chunk.toString(this.opts.encoding)
 
+    if (this.opts.escapeHandler) {
+      chunk?.replace(/\x1B((\[.*?[a-z])|.)/i, seq => {
+        const response = this.opts.escapeHandler(seq)
+
+        if (response)
+          this.socket.write(response)
+
+        return seq
+      })
+    }
+
+    if (this.opts.stripControls) {
+      chunk = chunk?.replace(/\x1B((\[.*?[a-z])|.)/i, '') // Escape sequences
+      chunk = chunk?.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '') // All controls except tab, lf, and cr.
+    }
+
     if (this.opts.newlineReplace)
-      chunk = chunk.replace(/\r\r\n|\r\n?/g, this.opts.newlineReplace)
+      chunk = chunk?.replace(/\r\r\n|\r\n?/g, this.opts.newlineReplace)
 
     return chunk
   }

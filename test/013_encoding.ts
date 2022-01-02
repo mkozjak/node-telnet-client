@@ -32,7 +32,6 @@ describe('encoding', () => {
       connection.send('foo', function (_err, resp) {
         connection.end().finally()
 
-        console.log(resp)
         expect(resp).to.equal('Fahrvergnügen\r\n')
         done()
       }).finally()
@@ -46,15 +45,15 @@ describe('encoding', () => {
       port: 2323,
       shellPrompt: null,
       timeout: 1500,
-      encoding: 'latin1'
+      encoding: 'latin1',
+      newlineReplace: '\n'
     }
 
     connection.connect(params).then(() => {
       connection.send('foo', function (_err, resp) {
         connection.end().finally()
 
-        console.log(resp)
-        expect(resp).to.equal('Fahrvergn\u00C3\u00BCgen\r\n')
+        expect(resp).to.equal('Fahrvergn\u00C3\u00BCgen\n')
         done()
       }).finally()
     })

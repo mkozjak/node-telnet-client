@@ -5,6 +5,7 @@
 /coverage
 /src
 /test
+*.tgz
 .eslintrc.json
 .npmrc
 .travis.yml
