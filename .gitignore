@@ -1,5 +1,9 @@
 node_modules/
-lib-cov/
+lib/
 *.log
 *.swp
 *.swo
+*.tgz
+.idea
+.nyc_output
+coverage/

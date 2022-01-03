@@ -1,7 +1,8 @@
 language: node_js
 node_js:
    - "12.14.0"
-   - "13.5.0"
+   - "14.18.2"
+   - "16.13.1"
 install: npm install
-after_script:
-  - npm run coveralls
+script: npm test
+after_success: npm run coveralls
