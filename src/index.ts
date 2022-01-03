@@ -118,7 +118,7 @@ export class Telnet extends EventEmitter {
 
     this.on('data', data => this.pushNextData(data))
     this.on('end', () => {
-      this.pushNextData(null);
+      this.pushNextData(null)
       this.state = 'end'
     })
   }
