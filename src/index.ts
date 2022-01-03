@@ -1,8 +1,8 @@
-import events from 'events'
+import { EventEmitter } from 'events'
 import { createConnection, Socket, SocketConnectOpts } from 'net'
 import { asCallback, Callback, search, Stream } from './utils'
 
-export type TelnetState = null | 'failedlogin' | 'getprompt' | 'login' | 'ready' | 'response' | 'standby' | 'start';
+export type TelnetState = null | 'end' | 'failedlogin' | 'getprompt' | 'login' | 'ready' | 'response' | 'standby' | 'start';
 
 export type EscapeHandler = (escapeSequence: string) => string | null
 
@@ -24,12 +24,11 @@ export interface SendOptions {
   maxBufferLength?: number;
   newlineReplace?: string;
   ors?: string;
+  shellPrompt?: string | RegExp;
   stripControls?: boolean;
   timeout?: number;
   waitFor?: string | RegExp | false;
-  /**
-   * @deprecated
-   */
+  /** @deprecated */
   waitfor?: string | RegExp | false;
 }
 
@@ -42,9 +41,7 @@ export interface ConnectOptions extends SendOptions {
   extSock?: any;
   failedLoginMatch?: string | RegExp;
   host?: string;
-  /**
-   * @deprecated
-   */
+  /** @deprecated */
   initialCTRLC?: boolean;
   initialCtrlC?: boolean;
   initialLFCR?: boolean;
@@ -55,10 +52,9 @@ export interface ConnectOptions extends SendOptions {
   negotiationMandatory?: boolean;
   pageSeparator?: string | RegExp;
   password?: string;
-  passwordPrompt?: string|RegExp;
+  passwordPrompt?: string | RegExp;
   port?: number;
   sendTimeout?: number;
-  shellPrompt?: string | RegExp;
   sock?: Socket;
   socketConnectOptions?: SocketConnectOpts;
   stripShellPrompt?: boolean;
@@ -106,7 +102,7 @@ function stringToRegex(opts: any): void {
   })
 }
 
-export class Telnet extends events.EventEmitter {
+export class Telnet extends EventEmitter {
   private dataResolver: any
   private endEmitted = false
   private inputBuffer: string = ''
@@ -121,7 +117,10 @@ export class Telnet extends events.EventEmitter {
     super()
 
     this.on('data', data => this.pushNextData(data))
-    this.on('end', () => this.pushNextData(null))
+    this.on('end', () => {
+      this.pushNextData(null);
+      this.state = 'end'
+    })
   }
 
   private pushNextData(data: any): void {
@@ -146,6 +145,8 @@ export class Telnet extends events.EventEmitter {
   async nextData(): Promise<string | null> {
     if (this.pendingData.length > 0)
       return this.pendingData.splice(0, 1)[0]
+    else if (this.state === 'end')
+      return null
 
     return new Promise<string>(resolve => this.dataResolver = resolve)
   }
@@ -157,7 +158,7 @@ export class Telnet extends events.EventEmitter {
       const resolveIt = (): void => { connectionPending = false; resolve() }
 
       Object.assign(this.opts, opts ?? {})
-      this.opts.initialCtrlC = opts.initialCTRLC && this.opts.initialCtrlC
+      this.opts.initialCtrlC = opts.initialCtrlC && this.opts.initialCTRLC
       this.opts.extSock = opts?.sock ?? this.opts.extSock
       stringToRegex(this.opts)
 
@@ -184,7 +185,7 @@ export class Telnet extends events.EventEmitter {
 
           if (this.opts.initialCtrlC === true) this.socket.write('\x03')
           if (this.opts.initialLFCR === true) this.socket.write('\r\n')
-          if (!this.opts.negotiationMandatory) resolve()
+          if (!this.opts.negotiationMandatory) resolveIt()
         })
       }
 
@@ -361,7 +362,7 @@ export class Telnet extends events.EventEmitter {
 
     return asCallback(new Promise((resolve, reject) => {
       Object.assign(this.opts, opts || {})
-      this.opts.waitFor = opts?.waitfor ?? opts?.waitFor ?? false
+      this.opts.waitFor = opts?.waitFor ?? opts?.waitfor ?? false
       stringToRegex(this.opts)
 
       if (this.socket.writable) {
