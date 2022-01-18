@@ -376,7 +376,7 @@ export class Telnet extends EventEmitter {
 
           if (this.opts.waitFor instanceof RegExp) {
             if (this.opts.waitFor.test(response)) {
-              this.removeListener('data', sendHandler)
+              this.socket.removeListener('data', sendHandler)
               resolve(response)
             }
           }
