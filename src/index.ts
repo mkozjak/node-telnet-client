@@ -110,7 +110,7 @@ export class Telnet extends EventEmitter {
   private opts = Object.assign({}, defaultOptions)
   private pendingData: (string | null)[] = []
   private response: string[] = undefined
-  private socket: Socket
+  private socket: Socket | null = null
   private state: TelnetState = null
 
   constructor() {
@@ -415,7 +415,7 @@ export class Telnet extends EventEmitter {
     }), callback)
   }
 
-  getSocket(): Socket {
+  getSocket(): Socket | null {
     return this.socket
   }
 
