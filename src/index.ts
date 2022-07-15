@@ -501,7 +501,7 @@ export class Telnet extends EventEmitter {
 
       const promptIndex = search(this.inputBuffer, this.opts.shellPrompt)
 
-      if (promptIndex < 0 && stringData.length > 0) {
+      if (promptIndex < 0 && stringData?.length > 0) {
         if (search(stringData, this.opts.pageSeparator) >= 0)
           this.socket.write(Buffer.from('20', 'hex'))
 
