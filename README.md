@@ -26,7 +26,7 @@ _Note: As of version 2.0.0 of this API, native ES6 promises are returned, not Bl
 ```js
 'use strict'
 
-const { Telnet } = require('telnet-client')
+const { Telnet } = require('telnet-client');
 
 (async function () {
   const connection = new Telnet()
