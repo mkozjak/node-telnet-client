@@ -30,6 +30,7 @@ export interface SendOptions {
   waitFor?: string | RegExp | false;
   /** @deprecated */
   waitfor?: string | RegExp | false;
+  sendTimeout: number;
 }
 
 export interface ConnectOptions extends SendOptions {
@@ -54,7 +55,6 @@ export interface ConnectOptions extends SendOptions {
   password?: string;
   passwordPrompt?: string | RegExp;
   port?: number;
-  sendTimeout?: number;
   sock?: Socket;
   socketConnectOptions?: SocketConnectOpts;
   stripShellPrompt?: boolean;
@@ -371,16 +371,16 @@ export class Telnet extends EventEmitter {
         const sendHandler = (data: Buffer): void => {
           response += this.decode(data)
 
-          if (sendTimer)
-            clearTimeout(sendTimer)
-
           if (this.opts.waitFor instanceof RegExp) {
             if (this.opts.waitFor.test(response)) {
+              if (sendTimer)
+                clearTimeout(sendTimer)
+              
               this.socket.removeListener('data', sendHandler)
               resolve(response)
             }
           }
-          else
+          else if(!sendTimer)
             resolve(response)
         }
 
@@ -388,7 +388,7 @@ export class Telnet extends EventEmitter {
 
         try {
           this.socket.write(data, () => {
-            if (!this.opts.waitFor || !opts) {
+            if (!this.opts.sendTimeout) {
               sendTimer = setTimeout(() => {
                 sendTimer = undefined
 
