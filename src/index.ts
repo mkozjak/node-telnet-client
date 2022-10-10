@@ -30,7 +30,7 @@ export interface SendOptions {
   waitFor?: string | RegExp | false;
   /** @deprecated */
   waitfor?: string | RegExp | false;
-  sendTimeout: number;
+  sendTimeout?: number;
 }
 
 export interface ConnectOptions extends SendOptions {
