@@ -380,8 +380,10 @@ export class Telnet extends EventEmitter {
               resolve(response)
             }
           }
-          else if(!sendTimer)
+          else if(!sendTimer) {
+            this.socket.removeListener('data', sendHandler)
             resolve(response)
+          }
         }
 
         this.socket.on('data', sendHandler)
