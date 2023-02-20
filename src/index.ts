@@ -390,7 +390,7 @@ export class Telnet extends EventEmitter {
 
         try {
           this.socket.write(data, () => {
-            if (!this.opts.sendTimeout) {
+            if (this.opts.sendTimeout) {
               sendTimer = setTimeout(() => {
                 sendTimer = undefined
 
