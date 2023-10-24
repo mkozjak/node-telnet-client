@@ -9,13 +9,13 @@ export type EscapeHandler = (escapeSequence: string) => string | null
 export interface ExecOptions {
   echoLines?: number;
   execTimeout?: number;
-  failedLoginMatch?: string;
+  failedLoginMatch?: string | RegExp;
   irs?: string;
-  loginPrompt?: string;
+  loginPrompt?: string | RegExp;
   maxBufferLength?: number;
   newlineReplace?: string;
   ors?: string;
-  shellPrompt?: string;
+  shellPrompt?: string | RegExp;
   stripControls?: boolean;
   timeout?: number;
 }
