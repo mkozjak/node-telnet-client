@@ -61,6 +61,7 @@ export interface ConnectOptions extends SendOptions {
   terminalHeight?: number;
   terminalWidth?: number;
   username?: string;
+  disableLogon: boolean;
 }
 
 const defaultOptions: ConnectOptions = {
@@ -88,7 +89,8 @@ const defaultOptions: ConnectOptions = {
   stripShellPrompt: true,
   timeout: 2000,
   username: 'root',
-  waitFor: false
+  waitFor: false,
+  disableLogon: false
 }
 
 Object.freeze(defaultOptions)
@@ -542,7 +544,7 @@ export class Telnet extends EventEmitter {
   }
 
   private login(handle: string): void {
-    if ((handle === 'username' || handle === 'password') && this.socket.writable) {
+    if ((handle === 'username' || handle === 'password') && this.socket.writable && !this.opts.disableLogon) {
       this.socket.write((this.opts as any)[handle] + this.opts.ors, () => {
         this.state = 'getprompt'
       })
