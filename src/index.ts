@@ -61,7 +61,7 @@ export interface ConnectOptions extends SendOptions {
   terminalHeight?: number;
   terminalWidth?: number;
   username?: string;
-  disableLogon: boolean;
+  disableLogon?: boolean;
 }
 
 const defaultOptions: ConnectOptions = {
