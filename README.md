@@ -241,6 +241,8 @@ Telnet client will then basically act like a simple TCP client. Defaults to true
 * `maxEndWait`: The maximum time, in milliseconds, to wait for a callback from `socket.end(…)` after calling `end()`. Defaults to 250 milliseconds.
 * `encoding`: _(Experimental)_ The telnet protocol is designed mainly for 7-bit ASCII characters, and a default encoding used is `'ascii'`. You can attempt to use other encodings, however, such as `'utf8'` and `'latin1'`. Since the character values 0xF0-0xFF are used for telnet commands, not all characters for many encodings can be properly conveyed. `'utf8'` can work, however, for the roughly 64K characters in Unicode Basic Multilingual Plane (BMP).
 
+* `disableLogon`: If set to `true`, the library will not try to login into to the host automatically. This is set to `false` by default. 
+
 Resolves once the connection is ready (analogous to the ```ready``` event).
 Rejects if the timeout is hit.
 
