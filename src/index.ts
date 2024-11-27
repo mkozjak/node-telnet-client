@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events'
 import { createConnection, Socket, SocketConnectOpts } from 'net'
 import { asCallback, Callback, search, Stream } from './utils'
+import { StringDecoder } from 'string_decoder'
 
 export type TelnetState = null | 'end' | 'failedlogin' | 'getprompt' | 'login' | 'ready' | 'response' | 'standby' | 'start';
 
@@ -114,12 +115,16 @@ export class Telnet extends EventEmitter {
   private response: string[] = undefined
   private socket: Socket | null = null
   private state: TelnetState = null
+  private decoder: StringDecoder = null
 
   constructor() {
     super()
 
     this.on('data', data => this.pushNextData(data))
     this.on('end', () => {
+      const remaining = this.decoder.end()
+      if (remaining)
+        this.pushNextData(remaining)
       this.pushNextData(null)
       this.state = 'end'
     })
@@ -127,7 +132,7 @@ export class Telnet extends EventEmitter {
 
   private pushNextData(data: any): void {
     if (data instanceof Buffer)
-      data = data.toString(this.opts.encoding)
+      data = this.decoder.write(data)
     else if (data != null)
       data = data.toString()
 
@@ -163,6 +168,7 @@ export class Telnet extends EventEmitter {
       this.opts.initialCtrlC = opts.initialCtrlC && this.opts.initialCTRLC
       this.opts.extSock = opts?.sock ?? this.opts.extSock
       stringToRegex(this.opts)
+      this.decoder = new StringDecoder(this.opts.encoding)
 
       // If socket is provided and in good state, just reuse it.
       if (this.opts.extSock) {
@@ -461,10 +467,11 @@ export class Telnet extends EventEmitter {
       this.state = 'getprompt'
 
     if (this.state === 'getprompt') {
-      const stringData = this.decode(chunk)
-      const promptIndex = search(stringData, this.opts.shellPrompt)
+      const stringData = this.decoder.write(chunk)
+      const decodedData = this.decode(stringData)
+      const promptIndex = search(decodedData, this.opts.shellPrompt)
 
-      if (search(stringData, this.opts.loginPrompt) >= 0) {
+      if (search(decodedData, this.opts.loginPrompt) >= 0) {
         // Make sure we don't end up in an infinite loop.
         if (!this.loginPromptReceived) {
           this.state = 'login'
@@ -472,18 +479,18 @@ export class Telnet extends EventEmitter {
           this.loginPromptReceived = true
         }
       }
-      else if (search(stringData, this.opts.passwordPrompt) >= 0) {
+      else if (search(decodedData, this.opts.passwordPrompt) >= 0) {
         this.state = 'login'
         this.login('password')
       }
-      else if (search(stringData, this.opts.failedLoginMatch) >= 0) {
+      else if (search(decodedData, this.opts.failedLoginMatch) >= 0) {
         this.state = 'failedlogin'
-        this.emit('failedlogin', stringData)
+        this.emit('failedlogin', decodedData)
         this.destroy().finally()
       }
       else if (promptIndex >= 0) {
         const shellPrompt = this.opts.shellPrompt instanceof RegExp ?
-          stringData.substring(promptIndex) : this.opts.shellPrompt
+          decodedData.substring(promptIndex) : this.opts.shellPrompt
 
         this.state = 'standby'
         this.inputBuffer = ''
