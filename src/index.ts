@@ -123,8 +123,10 @@ export class Telnet extends EventEmitter {
     this.on('data', data => this.pushNextData(data))
     this.on('end', () => {
       const remaining = this.decoder.end()
+
       if (remaining)
         this.pushNextData(remaining)
+      
       this.pushNextData(null)
       this.state = 'end'
     })
