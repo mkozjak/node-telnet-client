@@ -229,7 +229,6 @@ export class Telnet extends EventEmitter {
           this.emit('data', this.opts.newlineReplace ? Buffer.from(this.decode(data), this.opts.encoding) : data)
           emitted = true
         }
-
         const isReady: boolean[] = []
 
         const parsedData = this.parseData(data, isReady);
@@ -237,13 +236,6 @@ export class Telnet extends EventEmitter {
             resolveIt();
             if (!this.opts.shellPrompt && !emitted) this.emit( 'data', parsedData);
         }
-
-        // if ((data = this.parseData(data, isReady)) && connectionPending && (isReady[0] || !this.opts.shellPrompt)) {
-        //   resolveIt()
-
-        //   if (!this.opts.shellPrompt && !emitted)
-        //     this.emit('data', data)
-        // }
       })
 
       this.socket.on('error', error => {
@@ -475,13 +467,11 @@ export class Telnet extends EventEmitter {
       this.state = 'getprompt'
 
     if (this.state === 'getprompt') {
-
+      
       if(!chunk){
-        console.error('Received null chunk!')
-    }
-    const stringData = chunk ? this.decoder.write(chunk) : '';
-
-      // const stringData = this.decoder.write(chunk)
+          console.error('Received null chunk!')
+      }
+      const stringData = chunk ? this.decoder.write(chunk) : '';
       const decodedData = this.decode(stringData)
       const promptIndex = search(decodedData, this.opts.shellPrompt)
 
