@@ -229,14 +229,13 @@ export class Telnet extends EventEmitter {
           this.emit('data', this.opts.newlineReplace ? Buffer.from(this.decode(data), this.opts.encoding) : data)
           emitted = true
         }
-
         const isReady: boolean[] = []
 
-        if ((data = this.parseData(data, isReady)) && connectionPending && (isReady[0] || !this.opts.shellPrompt)) {
-          resolveIt()
+        const parsedData = this.parseData(data, isReady);
 
-          if (!this.opts.shellPrompt && !emitted)
-            this.emit('data', data)
+        if (parsedData && connectionPending && (isReady[0] || !this.opts.shellPrompt)) {
+            resolveIt();
+            if (!this.opts.shellPrompt && !emitted) this.emit( 'data', parsedData);
         }
       })
 
@@ -469,7 +468,12 @@ export class Telnet extends EventEmitter {
       this.state = 'getprompt'
 
     if (this.state === 'getprompt') {
-      const stringData = this.decoder.write(chunk)
+      
+      if (!chunk) {
+          console.error('Received null chunk!')
+      }
+
+      const stringData = chunk ? this.decoder.write(chunk) : '';
       const decodedData = this.decode(stringData)
       const promptIndex = search(decodedData, this.opts.shellPrompt)
 
