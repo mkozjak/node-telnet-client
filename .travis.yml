@@ -5,4 +5,3 @@ node_js:
    - "16.13.1"
 install: npm install
 script: npm test
-after_success: npm run coveralls
