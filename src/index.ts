@@ -621,11 +621,10 @@ export class Telnet extends EventEmitter {
   }
 
   private decode(chunk: string | Buffer): string {
-    if (chunk instanceof Buffer)
-      chunk = chunk.toString(this.opts.encoding)
+    let str: string = chunk instanceof Buffer ? chunk.toString(this.opts.encoding) : chunk as string
 
     if (this.opts.escapeHandler) {
-      chunk?.replace(/\x1B((\[.*?[a-z])|.)/i, seq => {
+      str?.replace(/\x1B((\[.*?[a-z])|.)/i, seq => {
         const response = this.opts.escapeHandler(seq)
 
         if (response)
@@ -636,13 +635,13 @@ export class Telnet extends EventEmitter {
     }
 
     if (this.opts.stripControls) {
-      chunk = chunk?.replace(/\x1B((\[.*?[a-z])|.)/i, '') // Escape sequences
-      chunk = chunk?.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '') // All controls except tab, lf, and cr.
+      str = str?.replace(/\x1B((\[.*?[a-z])|.)/i, '') // Escape sequences
+      str = str?.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '') // All controls except tab, lf, and cr.
     }
 
     if (this.opts.newlineReplace)
-      chunk = chunk?.replace(/\r\r\n|\r\n?/g, this.opts.newlineReplace)
+      str = str?.replace(/\r\r\n|\r\n?/g, this.opts.newlineReplace)
 
-    return chunk
+    return str
   }
 }
